@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Agent &amp; Fail-Closed Security Review — Cirigliano Security</title>
+  <meta name="description" content="Fixed-price security review for startups shipping LLM agents that call tools, touch customer data, hold keys, or move money." />
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-elev: #121a2b;
+      --card: #162033;
+      --line: #243149;
+      --text: #e8eef9;
+      --muted: #9aabb8;
+      --accent: #3dd6c6;
+      --accent-2: #6ea8ff;
+      --warn: #f0b429;
+      --danger: #ff7b72;
+      --radius: 14px;
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --max: 980px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(61,214,198,.12), transparent 55%),
+        radial-gradient(900px 500px at 90% 0%, rgba(110,168,255,.10), transparent 50%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,.82);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 14px 0; flex-wrap: wrap;
+    }
+    .brand { font-weight: 700; letter-spacing: .2px; }
+    .brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: .95rem; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 12px 18px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), #2bb3a6);
+      color: #041512; font-weight: 700; border: 0; cursor: pointer;
+      box-shadow: 0 8px 24px rgba(61,214,198,.25);
+    }
+    .btn:hover { filter: brightness(1.05); text-decoration: none; }
+    .btn.secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--line); box-shadow: none;
+    }
+    .hero { padding: 64px 0 40px; }
+    .eyebrow {
+      display: inline-block; font-size: .8rem; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+      border: 1px solid rgba(61,214,198,.35); padding: 6px 10px; border-radius: 999px;
+      background: rgba(61,214,198,.08);
+    }
+    h1 {
+      font-size: clamp(2rem, 4.5vw, 3.1rem);
+      line-height: 1.15; margin: 0 0 16px; letter-spacing: -0.02em;
+    }
+    .lede { font-size: 1.15rem; color: var(--muted); max-width: 46rem; margin: 0 0 28px; }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+    .trust {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    @media (max-width: 720px) { .trust { grid-template-columns: 1fr; } }
+    .trust div, .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 18px 18px;
+    }
+    .trust strong { display: block; color: var(--text); margin-bottom: 4px; }
+    .trust span { color: var(--muted); font-size: .92rem; }
+    section { padding: 36px 0; }
+    h2 { font-size: 1.55rem; margin: 0 0 12px; letter-spacing: -.01em; }
+    h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .muted { color: var(--muted); }
+    .grid-2 {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    @media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+    .card ul { margin: 8px 0 0; padding-left: 1.1rem; color: var(--muted); }
+    .card li { margin: 6px 0; }
+    .pill {
+      display: inline-block; font-size: .75rem; font-weight: 700;
+      letter-spacing: .04em; text-transform: uppercase;
+      padding: 4px 8px; border-radius: 999px; margin-bottom: 10px;
+    }
+    .pill.a { background: rgba(110,168,255,.15); color: var(--accent-2); }
+    .pill.b { background: rgba(61,214,198,.15); color: var(--accent); }
+    .price-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    @media (max-width: 860px) { .price-grid { grid-template-columns: 1fr; } }
+    .price {
+      background: var(--bg-elev); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .price.featured {
+      border-color: rgba(61,214,198,.55);
+      background: linear-gradient(180deg, rgba(61,214,198,.08), var(--bg-elev));
+    }
+    .price .amt { font-size: 1.8rem; font-weight: 800; }
+    .price .amt small { font-size: .95rem; font-weight: 600; color: var(--muted); }
+    .steps { counter-reset: step; display: grid; gap: 12px; }
+    .step {
+      counter-increment: step; display: grid; grid-template-columns: 40px 1fr; gap: 12px;
+      align-items: start; background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 16px;
+    }
+    .step::before {
+      content: counter(step); width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center; font-weight: 800;
+      background: rgba(110,168,255,.15); color: var(--accent-2);
+    }
+    details {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 14px 16px; margin: 0 0 10px;
+    }
+    summary { cursor: pointer; font-weight: 650; }
+    details p { color: var(--muted); margin: 10px 0 0; }
+    .placeholder {
+      border: 1px dashed rgba(240,180,41,.55);
+      background: rgba(240,180,41,.08);
+      color: #f6e7b0; border-radius: 10px; padding: 12px 14px; font-size: .95rem;
+    }
+    footer {
+      border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: .9rem;
+    }
+    .cta-band {
+      margin: 20px 0 0; padding: 28px; border-radius: calc(var(--radius) + 4px);
+      background: linear-gradient(135deg, rgba(110,168,255,.16), rgba(61,214,198,.12));
+      border: 1px solid var(--line);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">Cirigliano <span>Security</span></div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#for">Who it's for</a>
+        <a href="#tested">What's tested</a>
+        <a href="#deliverables">Deliverables</a>
+        <a href="#sample-report">Sample report</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#process">Process</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn" href="mailto:GregCirigliano@proton.me?subject=AI%20Agent%20Security%20Review%20inquiry">Contact</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow">Fixed price · Two weeks · Staging only</div>
+        <h1>AI Agent &amp; Fail-Closed Security Review</h1>
+        <p class="lede">
+          If your product lets an LLM call tools, touch customer data, hold keys, or move money,
+          find out what happens when it goes off-script—or falls into the wrong hands—before an
+          attacker or your enterprise customer's security team does.
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="mailto:GregCirigliano@proton.me?subject=AI%20Agent%20Security%20Review%20inquiry">Email GregCirigliano@proton.me</a>
+          <a class="btn secondary" href="#pricing">See pricing</a>
+        </div>
+        <div class="trust">
+          <div><strong>Written authorization first</strong><span>No testing without a signed scope.</span></div>
+          <div><strong>Staging environments only</strong><span>50% upfront · 2-week engagements.</span></div>
+          <div><strong>Evidence you can show buyers</strong><span>Threat model, fixes, hash-chained ledger.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="for">
+      <div class="wrap">
+        <h2>Who it's for</h2>
+        <p class="muted">Startups (typically seed to Series B) shipping LLM agents that can take real-world actions—especially teams facing enterprise security questionnaires or SOC 2 pressure.</p>
+        <div class="grid-2" style="margin-top:16px">
+          <div class="card">
+            <h3>Strong fit</h3>
+            <ul>
+              <li>Agents that call tools / APIs / browsers</li>
+              <li>Agents that read customer data (CRM, tickets, docs)</li>
+              <li>Agents that hold API keys or wallet credentials</li>
+              <li>Agents that move money, credits, or entitlements</li>
+              <li>Infra / SRE agents that can change production systems</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Not a fit (yet)</h3>
+            <ul>
+              <li>Marketing chatbots with no tools or data access</li>
+              <li>Pure model demos without credentials or actions</li>
+              <li>Production-only testing without a staging path</li>
+              <li>Engagements without written authorization</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tested">
+      <div class="wrap">
+        <h2>What's tested</h2>
+        <p class="muted">Two complementary halves—model behavior and credential lifecycle—so you don't get a PDF of prompt tricks with no revoke story (or the reverse).</p>
+        <div class="grid-2" style="margin-top:16px">
+          <div class="card">
+            <div class="pill a">Model-facing · promptfoo red-team</div>
+            <h3>Will the model abuse tools or leak?</h3>
+            <ul>
+              <li>Prompt injection &amp; jailbreak resistance</li>
+              <li>Tool / function abuse (unapproved HIGH actions)</li>
+              <li>Data exfiltration attempts</li>
+              <li>Secret &amp; key leakage in responses</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="pill b">Credential lifecycle · agent test harness</div>
+            <h3>Does revoke actually stop the agent?</h3>
+            <ul>
+              <li>Captured-credential revoke latency</li>
+              <li>Fail-closed when auth is unreachable</li>
+              <li>Replay of revoked credentials / old requests</li>
+              <li>HIGH-action approval gates (missing / stale / mismatched)</li>
+              <li>Rate / budget limits</li>
+              <li>Tamper-evident evidence ledger</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="deliverables">
+      <div class="wrap">
+        <h2>Deliverables</h2>
+        <div class="grid-2" style="margin-top:12px">
+          <div class="card"><h3>Threat model</h3><p class="muted">Scoped to your agent’s tools, data, and credentials—what can go wrong and what matters first.</p></div>
+          <div class="card"><h3>Prioritized fix list</h3><p class="muted">Engineer-ready findings with severity and concrete remediations, not generic advice.</p></div>
+          <div class="card"><h3>Evidence ledger</h3><p class="muted">Hash-chained <code>evidence-ledger</code> export of observed calls and test conclusions.</p></div>
+          <div class="card"><h3>One re-test</h3><p class="muted">After fixes land, we re-run the agreed cases so you can show buyers a clean pass.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sample-report">
+      <div class="wrap">
+        <h2>Sample report</h2>
+        <p class="muted" style="margin:4px 0 12px"><strong style="color:#b91c1c">SAMPLE: illustrative engagement; not a client.</strong> This is a full report produced by the same harness used in paid reviews. Every number in it comes from real local runs.</p>
+        <div class="grid-2" style="margin-top:12px">
+          <a class="card" href="sample-report.pdf" style="display:block;text-decoration:none;color:inherit;padding:0;overflow:hidden">
+            <img src="sample-report-p1.png" alt="Page 1 of the sample AI agent security review report" style="display:block;width:100%;height:auto;border-bottom:1px solid rgba(127,127,127,.25)">
+          </a>
+          <div class="card">
+            <h3>What's inside (8 pages)</h3>
+            <ul>
+              <li>A reference fail-closed custody implementation passed the credential-lifecycle tests that applied. After revoke, 0 of 31 calls succeeded, with the first refusal 3&nbsp;ms after revoke. 0 of 10 replays were accepted, and 9 of 9 approval-gate outcomes matched expectations.</li>
+              <li>A deliberately vulnerable mock produced 6 findings: 3 Critical, 1 High, 1 Medium and 1 Low. Each one comes with evidence, impact, a fix and re-test criteria.</li>
+              <li>An excerpt from the hash-chained evidence ledger, plus a tamper and deletion check showing that both are detected.</li>
+              <li>A mapping to the OWASP Top 10 for LLM Applications, and an appendix with the exact commands we ran.</li>
+            </ul>
+            <p style="margin-top:14px"><a class="btn" href="sample-report.pdf">Download sample report (PDF)</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <h2>Pricing</h2>
+        <p class="muted">Fixed price. 50% to start. Written scope and authorization before any testing.</p>
+        <div class="price-grid" style="margin-top:16px">
+          <div class="price">
+            <div class="pill a">Starter</div>
+            <div class="amt">$4,500</div>
+            <p class="muted">One chatbot / RAG feature without heavy tool use.</p>
+            <ul class="muted">
+              <li>Model-facing red-team pass</li>
+              <li>Basic credential / session checks</li>
+              <li>Threat model + fix list + re-test</li>
+            </ul>
+          </div>
+          <div class="price featured">
+            <div class="pill b">Agent tier</div>
+            <div class="amt">from $7,500</div>
+            <p class="muted">Tool-using agents (keys, data, money, or infra actions).</p>
+            <ul class="muted">
+              <li>Full promptfoo + agent test harness suite</li>
+              <li>Revoke / fail-closed / replay / approvals</li>
+              <li>Evidence ledger for enterprise buyers</li>
+            </ul>
+          </div>
+          <div class="price">
+            <div class="pill a">Fractional</div>
+            <div class="amt">from $4,000<small>/mo</small></div>
+            <p class="muted">Ongoing hands-on security engineering after the review.</p>
+            <ul class="muted">
+              <li>~20–25 hrs/month typical</li>
+              <li>Architecture, AppSec, key controls</li>
+              <li>SOC 2 / questionnaire support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="wrap">
+        <h2>Process</h2>
+        <div class="steps" style="margin-top:12px">
+          <div class="step"><div><h3>Scope &amp; written authorization</h3><p class="muted">We agree what is in/out of scope, staging targets, and rules of engagement. No testing starts without your signature.</p></div></div>
+          <div class="step"><div><h3>Staging assessment (≈2 weeks)</h3><p class="muted">Model-facing red-team and credential-lifecycle harness runs against staging only. 50% deposit to begin.</p></div></div>
+          <div class="step"><div><h3>Report, fixes, re-test</h3><p class="muted">You get the threat model, prioritized fixes, and evidence ledger—then one re-test after remediation.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <h2>About</h2>
+        <div class="card">
+          <p>Greg Cirigliano — security engineer focused on fail-closed credential and access-control systems. Reviews use an in-house agent test harness plus promptfoo-based red-team packs.</p>
+          <p style="margin-top:14px"><a href="sample-report.pdf">Download the sample report (PDF)</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <h2>FAQ</h2>
+        <details open>
+          <summary>Do you test production?</summary>
+          <p>No by default. Reviews run against staging (or an explicitly authorized test environment). Production requires separate written approval.</p>
+        </details>
+        <details>
+          <summary>Is this the same as a smart-contract audit or classic web pentest?</summary>
+          <p>No. This is scoped to LLM agents: model abuse of tools/data and the credential/revoke story when an agent or key is captured.</p>
+        </details>
+        <details>
+          <summary>What do you need from us to start?</summary>
+          <p>A signed scope, staging access or a mock endpoint, a list of tools/risk tags, and a test credential via secure channel (never committed to tickets or chat logs).</p>
+        </details>
+        <details>
+          <summary>Will you invent findings with AI?</summary>
+          <p>Automated tools help generate cases; every finding is validated against your system with evidence in the ledger before it goes in the report.</p>
+        </details>
+        <details>
+          <summary>Can this turn into ongoing help?</summary>
+          <p>Yes. Fractional security engineering is available from $4,000/month after (or instead of) a fixed review.</p>
+        </details>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="cta-band">
+          <h2 style="margin-top:0">Ready for a scoped review?</h2>
+          <p class="muted">Two November-style slots work best when you already have a staging agent and an enterprise deadline. Email with a one-paragraph description of your agent and tools.</p>
+          <div class="cta-row" style="margin-bottom:0">
+            <a class="btn" href="mailto:GregCirigliano@proton.me?subject=AI%20Agent%20Security%20Review%20inquiry">GregCirigliano@proton.me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>© <span id="y"></span> Greg Cirigliano · AI Agent &amp; Fail-Closed Security Review · Draft marketing page (not deployed).</p>
+      <p>No client logos or testimonials are shown because none are claimed. Placeholders in About must be replaced with verified facts only.</p>
+    </div>
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
