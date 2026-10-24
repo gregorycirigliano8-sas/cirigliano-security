@@ -115,8 +115,26 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 .lane th { background:#f8fafc !important; font-size:8pt; }
 .lane td:first-child { white-space:nowrap; width:80px; } .lane col.c1{width:80px}
 .lane td .badge { display:inline-block; margin-top:3px; }
+
+/* ===== round 2 ===== */
+.def { width:100%; table-layout:fixed; border-collapse:collapse; font-size:8.1pt; margin:4px 0 8px; }
+.def th, .def td { border:1px solid var(--line); padding:3px 6px; vertical-align:top; }
+.def th { background:#f1f5f9; font-size:7.6pt; text-transform:uppercase; letter-spacing:.04em; }
+.def td:first-child { font-weight:600; } .def th:first-child, .def td:first-child { white-space:normal; overflow-wrap:anywhere; }
+.def, .mx { break-inside:avoid; }
+.mx { width:100%; table-layout:fixed; border-collapse:collapse; font-size:8.1pt; margin:4px 0 6px; }
+.mx th, .mx td { border:1px solid var(--line); padding:3px 6px; vertical-align:top; }
+.mx th { background:#f1f5f9; font-size:7.6pt; text-transform:uppercase; letter-spacing:.04em; }
+.mx tr.ctl td { background:#f0fdf4; } .mx tr.st td { background:#f8fafc; font-style:normal; }
+.mx .k { font-size:7.4pt; color:var(--muted); }
+.assure { border:1px solid #cbd5e1; border-left:5px solid #b45309; background:#fffbeb; border-radius:6px; padding:8px 14px; margin:10px 0; font-size:8.6pt; break-inside:avoid; }
+.assure h4 { margin:0 0 4px; font-size:9pt; text-transform:uppercase; letter-spacing:.06em; color:#92400e; }
+.assure ul { margin:3px 0 3px; padding-left:16px; } .assure li { margin:2px 0; }
+.rubric td:first-child { white-space:nowrap; }
+.sub3 { margin:12px 0 2px; font-size:10.5pt; color:#0e7490; }
+.led.v td:first-child, .led.v th:first-child { white-space:normal; } .led.v td { vertical-align:top; }
 </style></head><body>
-<div class="banner"><strong>SAMPLE: illustrative engagement; not a client.</strong> Every number below comes from real runs on a local test box. The targets are a reference implementation and a mock that was deliberately made vulnerable, both on loopback. No client system was tested.</div>
+<div class="banner"><strong>SAMPLE: illustrative engagement; not a client.</strong> Observed results from local executions of the reference implementation and deliberately vulnerable mock; no client system tested. Both targets ran on loopback.</div>
 
 <div class="cover-rule"></div><div class="cover-kicker">Cirigliano Security · AI Agent Security Review</div><h1>AI Agent Security Review: Sample Report</h1>
 <p class="cover-sub">An engineering-focused assessment of agent permissions and execution controls.</p>
@@ -153,7 +171,7 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <h2>What this report does and does not show</h2>
 <div class="cols">
 <div><h4 style="color:#15803d">What it shows</h4><ul>
-<li>How a review is run, and the evidence it produces: revocation, replay, approval-gate, decision-reason and audit-ledger tests, each with a positive control and a tamper-evident ledger.</li>
+<li>How a review is run, and the evidence it produces: revocation, replay, approval-gate, decision-reason and audit-ledger tests, each recorded in a hash-chained evidence ledger (positive controls and ledger limits are set out in Sections 3 and 6).</li>
 <li>That the method detects each of the 6 flaw types deliberately injected into a mock service.</li>
 <li>How one reference implementation behaved on the tests that applied to it.</li>
 </ul></div>
@@ -168,7 +186,7 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 
 <h2 class="pb" style="margin-top:0">Executive overview</h2>
 <div class="verdict"><div class="k">Headline result</div>
-<div class="h">On the reference implementation, every control the test interface could exercise held: no findings. The method also caught all 6 flaws deliberately built into a mock service.</div>
+<div class="h">Target A: zero Critical, High, Medium or Low findings across applicable tests; one informational observation (I-01). The method also caught all 6 flaws deliberately built into a mock service.</div>
 <div class="s">This is a demonstration of the review method on local test systems. It is not a rating of any real product.</div></div>
 <div class="grid2">
 <div class="box"><h4>Findings by severity</h4>
@@ -177,19 +195,19 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <div class="box"><h4>Results at a glance</h4>
 <table class="cmp"><colgroup><col style="width:42%"><col style="width:29%"><col style="width:29%"></colgroup><thead><tr><th></th><th style="text-align:center">Target A</th><th style="text-align:center">Target B</th></tr></thead><tbody>
 <tr><td>What it is</td><td class="n" style="font-size:7.6pt;font-weight:600;white-space:normal">Reference implementation</td><td class="n" style="font-size:7.6pt;font-weight:600;white-space:normal">Mock service, injected flaws</td></tr>
-<tr><td>Findings</td><td class="n" style="color:#15803d">0</td><td class="n" style="color:#b91c1c">6</td></tr>
+<tr><td>Critical&ndash;Low findings</td><td class="n" style="color:#15803d">0</td><td class="n" style="color:#b91c1c">6</td></tr>
 <tr><td>Applicable tests passed</td><td class="n" style="color:#15803d">4 of 4</td><td class="n">clean: 6 of 6</td></tr>
-<tr><td>Calls that worked after revoke</td><td class="n">0 of 31</td><td class="n">F-04: 5 calls</td></tr>
-<tr><td>Replays accepted</td><td class="n">0 of 10</td><td class="n">F-01 caught</td></tr>
-<tr><td>Approval gates as expected</td><td class="n">9 of 9</td><td class="n">F-02 caught</td></tr>
+<tr><td>Calls accepted after revoke</td><td class="n">0 of 31</td><td class="n">F-04: 5 calls</td></tr>
+<tr><td>Reuse attempts accepted</td><td class="n">0 of 10</td><td class="n">F-01 caught</td></tr>
+<tr><td>Approval outcomes as expected</td><td class="n">9 of 9</td><td class="n">F-02 caught</td></tr>
 <tr><td>Not applicable</td><td class="n">2 tests</td><td class="n">0</td></tr>
 <tr><td>Injected flaws caught</td><td class="n">n/a</td><td class="n" style="color:#15803d">6 of 6</td></tr>
 </tbody></table></div>
 </div>
 <h3 style="margin:6px 0 4px;color:#0e7490">Three key takeaways</h3>
-<div class="take"><div class="no">1</div><p><strong>Revoked credentials stopped working at once on Target A.</strong> 0 of 31 tool calls succeeded after revocation, the first was refused 3 ms after the revoke returned, and 0 of 10 replays of the captured credential were accepted.</p></div>
-<div class="take"><div class="no">2</div><p><strong>Approval gates and the audit trail held, and the evidence can be checked.</strong> All 9 of 9 approval-gate outcomes matched expectations and the target&rsquo;s own ledger verified on 74 of 74 snapshots. Every run writes a hash-chained ledger; all 8 verify, and an edited entry and a deleted entry were both detected.</p></div>
-<div class="take"><div class="no">3</div><p><strong>The method finds real classes of control failure.</strong> Each of the 6 injected flaws (3 Critical, 1 High, 1 Medium, 1 Low) produced exactly one failing test, while the clean configuration passed 6 of 6. The remediation roadmap (page 9) turns these into a fix order.</p></div>
+<div class="take"><div class="no">1</div><p><strong>No post-revocation call was accepted on Target A in the tested window.</strong> 0 of 31 tool calls were accepted after revocation, the first refusal was received 3 ms after the revoke sequence returned, and 0 of 10 attempts to reuse the revoked credential were accepted.</p></div>
+<div class="take"><div class="no">2</div><p><strong>Approval gates and the audit trail held on the checks run, and the evidence can be re-checked.</strong> All 9 of 9 approval-gate outcomes matched expectations (7 refusals, 1 valid request accepted, 1 state check). The target reported its own ledger valid on 74 of 74 snapshots. The 7 Target B harness ledgers (SHA-256 chain) re-verify against their head sidecars; an edited entry, a deleted entry and a swapped pair were detected, and removing entries from the end was detected only when the expected head or count was supplied (limits in Section 6).</p></div>
+<div class="take"><div class="no">3</div><p><strong>The method finds real classes of control failure.</strong> Each of the 6 injected flaws (3 Critical, 1 High, 1 Medium, 1 Low) produced exactly one failing test, while the clean configuration passed 6 of 6. The remediation roadmap (page 12) turns these into a fix order.</p></div>
 <div class="caveat"><strong>Honest limits, still in force:</strong> two tests (fail-closed on auth outage, rate-limit burst) were <strong>not applicable</strong> to Target A and are not counted as passes. The prompt-level red team ran only against a scripted stub and is <strong>not validated against a real model</strong>. Latency figures are local loopback times, not a production SLA.</div>
 
 <h2 class="pb">Assessment coverage</h2>
@@ -199,33 +217,34 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 </div>
 <div class="cov">
 <div class="hd">Test area</div><div class="hd">Target A<small>reference implementation</small></div><div class="hd">Target B<small>deliberately vulnerable mock</small></div>
-<div class="row"><b>Revoke latency / post-revoke use</b><span>Test 3</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>0/31 post-revoke successes</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-04 detected (flaw injected)</span></div>
+<div class="row"><b>Revoke latency / post-revoke use</b><span>Test 3</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>0/31 accepted in tested window</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-04 detected (flaw injected)</span></div>
 <div class="row"><b>Fail-closed on auth outage</b><span>Test 4</span></div><div class="cell c-na"><span class="ic">&ndash;</span><span class="tx"><b>Not applicable</b>No adapter control</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-03 detected (flaw injected)</span></div>
-<div class="row"><b>Replay of captured credential</b><span>Test 5</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>0/10 replays accepted</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-01 detected (flaw injected)</span></div>
+<div class="row"><b>Credential reuse / replay</b><span>Test 5 (terms in Section 3)</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>0/10 reuse attempts accepted</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-01 detected (old-generation reuse; flaw injected)</span></div>
 <div class="row"><b>Approval gates</b><span>Test 6</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>9/9 as expected</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-02 detected (flaw injected)</span></div>
 <div class="row"><b>Rate limit (burst)</b><span>Test 7</span></div><div class="cell c-na"><span class="ic">&ndash;</span><span class="tx"><b>Not applicable</b>No matching adapter action</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-05 detected (flaw injected)</span></div>
-<div class="row"><b>Decision reasons + ledger integrity</b><span>Test 8</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>Ledger valid 74/74; note I-01</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-06 detected (flaw injected)</span></div>
+<div class="row"><b>Decision reasons + ledger integrity</b><span>Test 8</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>Target-reported ledger valid 74/74; note I-01</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-06 detected (flaw injected)</span></div>
 <div class="row"><b>Prompt-level red team</b><span>promptfoo smoke run</span></div><div class="cell c-nv"><span class="ic">?</span><span class="tx"><b>Not validated against a real model</b>Scripted stub only; not run on this target</span></div><div class="cell c-nv"><span class="ic">?</span><span class="tx"><b>Not validated against a real model</b>Scripted stub only; not run on this target</span></div>
 </div>
 <p class="fn"><strong>Reading Target B:</strong> &ldquo;failed&rdquo; means the harness caught a flaw that was deliberately injected into that configuration. The clean mock configuration passed all 6 tests.</p>
 <p class="fn"><strong>Reading Target A:</strong> &ldquo;not applicable&rdquo; means the test interface has no control for that test, so it was not run and is not counted as a pass. Also not tested on Target A (Section 8): replay of a pre-revocation credential after re-authorization, and stale or mismatched approvals.</p>
-<p class="fn"><strong>Prompt-level row:</strong> the 18 generated attacks ran only against a scripted stub that gives fixed refusals. That shows the pipeline works. It is not evidence about any real model or agent.</p>
+<p class="fn"><strong>Prompt-level row:</strong> pipeline smoke test: 18/18 expected stub responses; real-model security not evaluated. The 18 generated attacks ran only against a scripted stub that gives fixed refusals, which shows the pipeline works. It is not evidence about any real model or agent.</p>
 
 <h2>1. Executive summary</h2>
 <ul>
-<li><strong>Target A (reference fail-closed custody implementation): no findings in the tests that applied.</strong><ul>
+<li><strong>Target A (reference fail-closed custody implementation): zero Critical, High, Medium or Low findings across applicable tests; one informational observation (I-01).</strong><ul>
 <li>Before revocation, a live credential was allowed (positive control 1/1).</li>
-<li>After revocation, <strong>0 of 31</strong> tool calls succeeded. The first call after revocation was refused <strong>3 ms</strong> after the revoke returned.</li>
-<li><strong>0 of 10</strong> replays of the captured credential were accepted.</li>
-<li>All <strong>9 of 9</strong> approval-gate outcomes matched expectations: 7 invalid requests refused, 2 valid ones accepted.</li>
-<li>The target&#39;s own audit ledger verified as intact on <strong>74 of 74</strong> state snapshots.</li>
+<li>After revocation, <strong>0 of 31</strong> tool calls were accepted in the tested window. The first refusal was received <strong>3 ms</strong> after the revoke sequence returned (timing definitions in Section 3).</li>
+<li><strong>0 of 10</strong> attempts to reuse the revoked credential were accepted (revoked-credential reuse; see the terms in Section 3).</li>
+<li>All <strong>9 of 9</strong> approval-gate outcomes matched expectations: 7 invalid requests refused, 1 valid request accepted, and 1 state check (matrix in Section 4).</li>
+<li>The target&#39;s own state endpoint reported its audit ledger valid on <strong>74 of 74</strong> state snapshots (self-reported by the target; the harness did not recompute the target&#39;s chain).</li>
 <li>Two tests (fail-closed on auth outage, rate-limit burst) are <strong>NOT APPLICABLE</strong>: the test adapter has no control for either, so they were not run and not counted as passes.</li>
 </ul>
 </li>
 <li><strong>Target B (mock agent service with injected flaws): the harness caught all 6 injected flaws.</strong> Each flaw produced exactly one failing test, and the clean configuration passed 6 of 6. That gives <strong>6 findings</strong> (3 Critical, 1 High, 1 Medium, 1 Low), plus 1 informational note on Target A.</li>
-<li><strong>Evidence integrity.</strong> Every run writes a hash-chained ledger, and all 8 ledgers verify as intact.<ul>
+<li><strong>Evidence integrity.</strong> Target B runs write a SHA-256 hash-chained ledger, appended one entry at a time, with a head sidecar (head hash and entry count). All 7 Target B ledgers re-verify with the harness verifier; they were unsigned (no signing key supplied). Section 6 states what that does and does not prove.<ul>
 <li>We tested the check itself: changing one recorded outcome was caught (<code>Invalid hash at ledger index 6</code>).</li>
 <li>Deleting one entry was also caught (<code>Broken prevHash at ledger index 5</code>).</li>
+<li>Removing the last 3 entries was not caught by the chain alone; it was caught when the expected head and count (50 entries) were supplied.</li>
 </ul>
 </li>
 </ul>
@@ -270,9 +289,9 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <ol>
 <li><p><strong>Credential-lifecycle tests</strong> (agent test harness, tests 3–8):</p>
 <ul>
-<li>Each test resets the target first.</li>
-<li>Each test includes a positive control, so a refusal can&#39;t come from the target simply being broken.</li>
-<li>For every request, the harness records a normalized outcome (<code>allowed</code> or <code>recovered</code>, plus whether a reason was present) and a SHA-256 of the raw response. These go into an append-only, hash-chained ledger.</li>
+<li>Each test starts from a known state: Target A is reset first, and on Target B a fresh credential is issued (tests 3&ndash;7).</li>
+<li>Positive controls (checks that the target does allow what it should, so a refusal isn&#39;t just a broken target) exist only where listed in the table below. Where the harness does not assert a control inside the test, the clean-configuration run is the control.</li>
+<li>For every request, the harness records a normalized outcome (<code>allowed</code> or <code>recovered</code>, plus whether a reason was present) and (Target A profile) a SHA-256 of the raw response. These go into an ordered ledger: a SHA-256 hash chain over a canonical, length-prefixed serialization of each entry. Each entry is appended to the ledger file and flushed as it is recorded; at export the harness writes a head sidecar (head hash and entry count), and signs the head with HMAC-SHA256 only if a signing key is supplied. The harness does not enforce append-only storage.</li>
 </ul>
 </li>
 <li><p><strong>How the tests map onto Target A&#39;s test interface:</strong></p>
@@ -285,15 +304,15 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 </thead>
 <tbody><tr>
 <td>3 Revoke latency / post-revoke use</td>
-<td>low-risk tool-call (control) → revoke → poll tool-call every 100 ms for 3 s, plus each HIGH-risk tool</td>
+<td>low-risk tool-call (control) → revoke → poll tool-call about every 100 ms for 3 s (first probe immediately after the revoke returns), plus each HIGH-risk tool</td>
 </tr>
 <tr>
 <td>4 Fail-closed on auth outage</td>
 <td><strong>NOT APPLICABLE</strong>: no auth-outage control on the adapter</td>
 </tr>
 <tr>
-<td>5 Replay after revoke</td>
-<td>unlock (control) → revoke → 5× replay unlock + 5× tool-call on the revoked credential</td>
+<td>5 Credential reuse after revoke</td>
+<td>unlock (control) → revoke → 5× re-present the unlock operation + 5× tool-call after revoke</td>
 </tr>
 <tr>
 <td>6 Approval gates</td>
@@ -305,7 +324,7 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 </tr>
 <tr>
 <td>8 Reasons + ledger integrity</td>
-<td>reason present on denials; target ledger validity read from the state endpoint after every call</td>
+<td>reason present on denials; the target&#39;s own ledger-valid flag read from the state snapshots returned with its responses</td>
 </tr>
 </tbody></table>
 </li>
@@ -318,10 +337,48 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <li><p><strong>Prompt-level red team (promptfoo):</strong></p>
 <ul>
 <li>We ran a smoke run (Oct 20, 2026) of 18 generated attacks: plugins <code>excessive-agency</code>, <code>pii:direct</code> and <code>harmful:privacy</code>, with strategies <code>basic</code> and <code>prompt-injection</code>.</li>
-<li><strong>Honest note:</strong> this scored <strong>18/18 passes, but only against a scripted local stub agent</strong> (<code>providers/stub-agent.js</code>) that gives fixed refusals. It shows the pipeline works end to end. It is <em>not</em> evidence about any real model or agent, and it produced no findings.</li>
+<li><strong>Pipeline smoke test: 18/18 expected stub responses; real-model security not evaluated.</strong> The run used only a scripted local stub agent (<code>providers/stub-agent.js</code>) that gives fixed refusals. It shows the pipeline works end to end. It is <em>not</em> evidence about any real model or agent, and it produced no findings.</li>
 </ul>
 </li>
 </ol>
+
+<h3 class="sub3 pb" style="margin-top:0">Definitions used in this report</h3>
+<p style="margin:0 0 3px"><strong>Timing.</strong> Three different measurements are kept apart. All are local loopback wall-clock times taken by the harness.</p>
+<table class="def"><colgroup><col style="width:17%"><col style="width:35%"><col style="width:24%"><col style="width:24%"></colgroup>
+<thead><tr><th>Measurement</th><th>What it is</th><th>Target A</th><th>Target B (mock)</th></tr></thead><tbody>
+<tr><td>Revoke API round-trip</td><td>Time for the revoke request(s) to complete, seen from the client.</td><td>11.7 ms for the whole revoke sequence (three adapter requests, not one).</td><td>Not reported separately.</td></tr>
+<tr><td>Revoke to first refusal</td><td>From the revoke sequence returning to the client receiving the first refused post-revoke call. The first probe is sent immediately, so this includes that call&rsquo;s own round-trip.</td><td>3 ms.</td><td>Not measured.</td></tr>
+<tr><td>Enforcement / propagation delay</td><td>How long the target kept accepting a revoked credential. Measured from just before the revoke request to the last accepted post-revoke call (so it includes the round-trip). The harness reports 0 when no post-revoke call was accepted; that is the absence of acceptance, not a measured delay.</td><td>No call accepted in the 3 s window polled about every 100 ms. No nonzero delay was observed by this test at that sampling resolution (reported as 0 by convention).</td><td>F-04: 1168 ms, with 5 accepted calls. Clean mock: no call accepted (0 by convention).</td></tr>
+</tbody></table>
+<p class="fn" style="margin-top:0">Polling about every 100 ms cannot see an acceptance window shorter than the gap between probes. A refusal inside the window is only evidence of revocation if its reason is not throttling: on Target A, 0 refusals were attributable to throttling; on Target B in F-04, the mid-window refusals were rate-limit refusals (Section 5).</p>
+
+<p style="margin:8px 0 3px"><strong>Replay and credential reuse.</strong> &ldquo;Test 5&rdquo; exercises different things on the two targets, so the terms are separated.</p>
+<table class="def"><colgroup><col style="width:19%"><col style="width:23%"><col style="width:29%"><col style="width:29%"></colgroup>
+<thead><tr><th>Term</th><th>Meaning</th><th>Target A</th><th>Target B (mock)</th></tr></thead><tbody>
+<tr><td>Revoked-credential reuse</td><td>Using a credential after it was revoked.</td><td>Tested: 10 attempts (the unlock operation re-presented 5 times, plus 5 tool calls), 0 accepted.</td><td>Covered by test 3 (F-04 window).</td></tr>
+<tr><td>Old-generation reuse</td><td>Using a superseded credential after revoke and reissue.</td><td>Not tested: the adapter cannot present a pre-revocation credential after re-authorization.</td><td>Tested in test 5 (F-01).</td></tr>
+<tr><td>Signed-request replay</td><td>Resubmitting a previously captured request body.</td><td>Not tested: the attempts re-issue the operation fresh, not a recorded body.</td><td>Prior body attached in test 5, but the mock decides on the credential alone, so replay is not isolated.</td></tr>
+</tbody></table>
+
+<p style="margin:8px 0 3px"><strong>Terms as simulated by the test targets.</strong> No claim is made about real cryptographic or authentication properties.</p>
+<table class="def"><colgroup><col style="width:17%"><col style="width:83%"></colgroup><tbody>
+<tr><td>Credential</td><td>A bearer token sent in the authorization header and read from an environment variable. Target B&rsquo;s mock issues, revokes and reissues short-lived tokens; Target A is revoked through the test adapter&rsquo;s own revoke operation. Token format and storage are not assessed.</td></tr>
+<tr><td>Signed request</td><td>Target B only: a JSON request body the mock returns after an allowed call and the harness can send again. No signature is created or verified, so nothing here tests signature, nonce or expiry schemes.</td></tr>
+<tr><td>Approval</td><td>Target B: a record naming tool, action, target and issue time, which the mock requires to match the HIGH-risk tool and be recent. Target A: a number of approvals supplied with a re-authorization request; the adapter has no per-tool-call approval input.</td></tr>
+<tr><td>Second factor</td><td>Target A: a yes/no &ldquo;second factor presented&rdquo; input on re-authorization, simulated by the adapter. Nothing is claimed about the strength of any real factor.</td></tr>
+</tbody></table>
+
+<p style="margin:8px 0 3px"><strong>Positive controls, where they exist.</strong></p>
+<table class="def"><colgroup><col style="width:19%"><col style="width:40%"><col style="width:41%"></colgroup>
+<thead><tr><th>Test</th><th>Target A</th><th>Target B (mock)</th></tr></thead><tbody>
+<tr><td>3 Revoke / post-revoke use</td><td>In-test: one low-risk call accepted before revoke (1/1). The test fails if it is not.</td><td>No in-test assertion; the clean configuration is the control.</td></tr>
+<tr><td>4 Fail-closed on outage</td><td>Not applicable.</td><td>No in-test assertion; the harness restores auth afterwards but does not check calls succeed again.</td></tr>
+<tr><td>5 Credential reuse</td><td>In-test: unlock operation accepted before revoke. The test fails if it is not.</td><td>No in-test assertion; the clean configuration is the control.</td></tr>
+<tr><td>6 Approval gates</td><td>In-test: one valid re-authorization accepted (row 7 of the matrix). No case with a valid approval on a HIGH-risk tool call.</td><td>No in-test assertion (all three cases are refusals); the clean configuration is the control.</td></tr>
+<tr><td>7 Rate-limit burst</td><td>Not applicable.</td><td>No in-test assertion that calls up to the limit are accepted; the clean configuration is the control.</td></tr>
+<tr><td>8 Reasons + ledger</td><td>No separate control.</td><td>No separate control; the clean configuration gave a reason on every response.</td></tr>
+</tbody></table>
+
 <h2>4. Results: Target A (reference fail-closed custody implementation)</h2>
 <table class="res" style="table-layout:fixed"><colgroup><col style="width:4%"><col style="width:26%"><col style="width:15%"><col style="width:55%"></colgroup>
 <thead>
@@ -336,7 +393,7 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <td>3</td>
 <td>Captured credential and revoke latency</td>
 <td><span class="badge pass">PASS</span></td>
-<td>Control: 1/1 allowed before revoke. Revoke sequence: 11.7 ms round-trip. First post-revoke call refused 3 ms after revoke. Post-revoke successes <strong>0/31</strong> (29 low-risk + 2 high-risk). 0 refusals attributable to throttling.</td>
+<td>Control: 1/1 allowed before revoke. Revoke API round-trip (three-request sequence): 11.7 ms. First refusal received 3 ms after the revoke sequence returned. Post-revoke successes <strong>0/31</strong> in the tested window (29 low-risk + 2 high-risk). 0 refusals attributable to throttling. No nonzero enforcement delay observed (definitions in Section 3).</td>
 </tr>
 <tr>
 <td>4</td>
@@ -346,15 +403,15 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 </tr>
 <tr>
 <td>5</td>
-<td>Replay of captured credential after revoke</td>
+<td>Credential reuse after revoke (revoked-credential reuse)</td>
 <td><span class="badge pass">PASS</span></td>
-<td>Control unlock allowed before revoke. Replays accepted after revoke <strong>0/10</strong>.</td>
+<td>Control unlock allowed before revoke. Reuse attempts accepted after revoke <strong>0/10</strong> (5 unlock + 5 tool-call).</td>
 </tr>
 <tr>
 <td>6</td>
 <td>Approval gates</td>
 <td><span class="badge pass">PASS</span></td>
-<td>9/9 as expected. Refused: HIGH-risk tool ×2 with no approval; re-auth while live; no approvals; insufficient approvals; missing second factor; new credential doesn&#39;t auto-grant tool use. Accepted: valid re-auth; revoked credential stays on the revocation list.</td>
+<td>9/9 outcomes as expected: 7 requests refused, 1 valid request accepted (the positive control), and 1 state check (not a request). Matrix below.</td>
 </tr>
 <tr>
 <td>7</td>
@@ -366,10 +423,21 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <td>8</td>
 <td>Denial reasons + tamper-evident ledger</td>
 <td><span class="badge pass">PASS</span></td>
-<td>Target ledger valid on 74/74 snapshots (final: 21 entries). Harness ledger: 83 entries, valid.</td>
+<td>Target-reported ledger valid on 74/74 snapshots (final: 21 entries); not recomputed by the harness. The harness ledger for this run came from an earlier harness version (non-cryptographic chain hash); Target A was not re-run and that ledger is not re-verified or shown here (Section 6).</td>
 </tr>
 </tbody></table>
+<div class="avoid"><p style="margin:10px 0 3px"><strong>Test 6 approval-gate matrix (Target A, 9 outcomes).</strong> Conditions are listed in the order run; input names are as the test adapter simulates them.</p><table class="mx"><colgroup><col style="width:4%"><col style="width:47%"><col style="width:11%"><col style="width:13%"><col style="width:15%"><col style="width:10%"></colgroup><thead><tr><th>#</th><th>Input condition</th><th>Kind</th><th>Expected</th><th>Observed</th><th>Result</th></tr></thead><tbody><tr class=""><td>1</td><td>HIGH-risk tool 1 called with no approval</td><td>request</td><td>refused</td><td>refused</td><td><span class="badge pass">PASS</span></td></tr><tr class=""><td>2</td><td>HIGH-risk tool 2 called with no approval</td><td>request</td><td>refused</td><td>refused</td><td><span class="badge pass">PASS</span></td></tr><tr class=""><td>3</td><td>Re-authorization with sufficient approvals and second factor, requested while the credential is still live (before revoke)</td><td>request</td><td>refused</td><td>refused</td><td><span class="badge pass">PASS</span></td></tr><tr class=""><td>4</td><td>After revoke: re-authorization with no approvals and no second factor</td><td>request</td><td>refused</td><td>refused</td><td><span class="badge pass">PASS</span></td></tr><tr class=""><td>5</td><td>After revoke: insufficient approvals, second factor presented</td><td>request</td><td>refused</td><td>refused</td><td><span class="badge pass">PASS</span></td></tr><tr class=""><td>6</td><td>After revoke: sufficient approvals, second factor missing</td><td>request</td><td>refused</td><td>refused</td><td><span class="badge pass">PASS</span></td></tr><tr class="ctl"><td>7</td><td>After revoke: sufficient approvals and second factor (valid) <span class="k">&mdash; positive control</span></td><td>request</td><td>accepted</td><td>accepted</td><td><span class="badge pass">PASS</span></td></tr><tr class=""><td>8</td><td>Low-risk tool call immediately after the valid re-authorization (the re-issued credential must not auto-grant tool use)</td><td>request</td><td>refused</td><td>refused</td><td><span class="badge pass">PASS</span></td></tr><tr class="st"><td>9</td><td>Revoked credential remains on the revocation list <span class="k">&mdash; state check, read from the state endpoint</span></td><td>state check</td><td>present</td><td>present</td><td><span class="badge pass">PASS</span></td></tr></tbody></table><p class="fn" style="margin-top:0">Totals: 7 requests refused as expected, 1 valid request accepted as expected, 1 state assertion held. Row 7 is the only positive control in this test; row 9 reads state and does not exercise a request. Stale and mismatched approvals are not inputs on Target A (Section 8). There is no HIGH-risk tool call with a valid approval, so the HIGH-risk path has no positive control on Target A.</p></div>
 <h2>5. Findings</h2>
+<p style="margin:0 0 3px"><strong>How severity is assigned in this report.</strong></p>
+<table class="def rubric"><colgroup><col style="width:11%"><col style="width:67%"><col style="width:22%"></colgroup>
+<thead><tr><th>Rating</th><th>Meaning here</th><th>Applied to</th></tr></thead><tbody>
+<tr><td><span class="badge critical">Critical</span></td><td>A control that stops an actor using the agent&rsquo;s authority (credential validity, human approval, fail-closed behavior) was bypassed in the test, with no bounded window.</td><td>F-01, F-02, F-03</td></tr>
+<tr><td><span class="badge high">High</span></td><td>The control did take effect, but a demonstrated window allowed unauthorized use first.</td><td>F-04 (5 calls over 1168 ms)</td></tr>
+<tr><td><span class="badge medium">Medium</span></td><td>A limit that bounds volume or blast radius was not enforced; harm needs further conditions.</td><td>F-05</td></tr>
+<tr><td><span class="badge low">Low</span></td><td>Weakens detection or forensics; does not itself let an actor do anything.</td><td>F-06</td></tr>
+<tr><td><span class="badge info">Info</span></td><td>An observation with no demonstrated enforcement failure.</td><td>I-01</td></tr>
+</tbody></table>
+<p class="fn" style="margin-top:0">Ratings describe each flaw as demonstrated on a test target under the stated conditions. They are not a rating of any real product. A client engagement would also weigh exploitability, asset sensitivity and compensating controls; this sample rates the demonstrated flaw only. Impact lines below are potential impacts, conditional on deployment.</p>
 <table class="fnd"><colgroup><col style="width:7%"><col style="width:12%"><col style="width:22%"><col style="width:31%"><col style="width:7%"><col style="width:21%"></colgroup>
 <thead>
 <tr>
@@ -378,14 +446,14 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <th>Target</th>
 <th>Title</th>
 <th>Test</th>
-<th>OWASP LLM (2025)</th>
+<th>Relevant OWASP risk</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>F-01</td>
 <td><span class="badge critical">Critical</span></td>
 <td>B <code>bad-replay-accept</code></td>
-<td>Old credential accepted after reissue (replay)</td>
+<td>Old credential accepted after reissue (old-generation reuse)</td>
 <td>5</td>
 <td>LLM06 Excessive Agency</td>
 </tr>
@@ -409,7 +477,7 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <td>F-04</td>
 <td><span class="badge high">High</span></td>
 <td>B <code>bad-slow-revoke</code></td>
-<td>Revoked credential stays usable: 5 calls over 1146 ms</td>
+<td>Revoked credential stays usable: 5 calls over 1168 ms</td>
 <td>3</td>
 <td>LLM06 Excessive Agency</td>
 </tr>
@@ -427,278 +495,190 @@ h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.fi
 <td>B <code>bad-missing-reason</code></td>
 <td>43 responses lack a decision reason (weak audit trail)</td>
 <td>8</td>
-<td>LLM06 (oversight/forensics)</td>
+<td>none (supporting auditability observation)</td>
 </tr>
 <tr>
 <td>I-01</td>
 <td><span class="badge info">Info</span></td>
 <td>A</td>
-<td>Replay-denial responses from the unlock operation carry no <code>reason</code> field (5/5). The decision itself was refused and logged.</td>
+<td>Denials of the re-presented unlock operation carry no <code>reason</code> field (5/5). The decision itself was refused and logged.</td>
 <td>8 (note)</td>
 <td>none</td>
 </tr>
 </tbody></table>
 <h3 class="finding sev-critical"><span class="badge critical">Critical</span><span>F-01: Old credential accepted after reissue</span><span class="tgt">Target B</span></h3>
 <ul>
-<li><strong>Evidence</strong> (ledger <code>bad-replay-accept</code>, entries 32–36, head <code>ec46c18a574e6ca9…</code>):<ul>
-<li><code>reissue allowed=true</code> → <code>call_tool allowed=true</code> → <code>revoke allowed=true</code> → <code>reissue allowed=true</code> → <code>call_tool allowed=true (&quot;tool call allowed&quot;)</code>. That last call was a replay of the old credential with the prior signed request body.</li>
+<li><strong>Evidence</strong> (ledger <code>bad-replay-accept</code>, entries 32–36, head <code>7c6557b61f943fcd…</code>):<ul>
+<li><code>reissue allowed=true</code> → <code>call_tool allowed=true</code> → <code>revoke allowed=true</code> → <code>reissue allowed=true</code> → <code>call_tool allowed=true (&quot;tool call allowed&quot;)</code>. That last call re-presented the old credential with the prior request body attached. In this mock, acceptance depends on the credential alone, so the finding demonstrates old-generation credential reuse; signed-request replay was not tested separately.</li>
 <li>Test 5: <em>&quot;replay accepted after reissue&quot;</em>.</li>
 </ul>
 </li>
-<li><strong>Impact:</strong> anyone holding a stolen or logged credential, or a captured signed request, keeps acting as the agent after the owner rotates it.</li>
+<li><strong>Potential impact (conditional on deployment):</strong> anyone holding a stolen or logged credential could keep acting as the agent after the owner rotates it.</li>
 <li><strong>Fix:</strong><ul>
 <li>Bind each credential to a generation counter and reject any generation other than the current one.</li>
-<li>Make signed requests single-use (nonce plus expiry), checked server-side before any tool runs.</li>
+<li>Make signed requests single-use (nonce plus expiry), checked server-side before any tool runs (recommended hardening; not separately tested here).</li>
 </ul>
 </li>
-<li><strong>Re-test passes when</strong> test 5 shows the old credential <em>and</em> the prior request body refused after reissue, over 3 consecutive runs.</li>
+<li><strong>Re-test passes when</strong> test 5 shows the old credential refused after reissue, over 3 consecutive runs. A separate case that resubmits a prior request body would be added for the re-test.</li>
 </ul>
 <h3 class="finding sev-critical"><span class="badge critical">Critical</span><span>F-02: HIGH-risk approval gate bypass</span><span class="tgt">Target B</span></h3>
 <ul>
-<li><strong>Evidence</strong> (ledger <code>bad-no-approval-check</code>, head <code>f9962bd2504dac22…</code>):<ul>
+<li><strong>Evidence</strong> (ledger <code>bad-no-approval-check</code>, head <code>d44a7ef96a89cea7…</code>):<ul>
 <li>Three HIGH-risk <code>sign_tx</code> calls returned <code>allowed=true</code> (<em>&quot;tool call allowed&quot;</em>): with no approval, with a stale approval, and with an approval for a different action.</li>
 <li>The clean configuration refused all three with <em>&quot;fresh matching HIGH-risk approval required&quot;</em>.</li>
 </ul>
 </li>
-<li><strong>Impact:</strong> a prompt-injected or compromised agent can carry out irreversible, high-consequence actions with no human in the loop.</li>
+<li><strong>Potential impact (conditional on deployment):</strong> a prompt-injected or compromised agent could carry out irreversible, high-consequence actions with no human in the loop.</li>
 <li><strong>Fix:</strong><ul>
 <li>Require an approval that is fresh (short time-to-live), single-use, and bound to the exact tool and arguments.</li>
 <li>Verify it on the server at execution time, not in the agent.</li>
 </ul>
 </li>
-<li><strong>Re-test passes when</strong> test 6 refuses missing, stale and mismatched approvals and accepts a fresh matching one.</li>
+<li><strong>Re-test passes when</strong> test 6 refuses missing, stale and mismatched approvals. Test 6 as run asserts only those refusals, so a valid-approval case would be added for the re-test to confirm a fresh matching approval is accepted.</li>
 </ul>
 <h3 class="finding sev-critical"><span class="badge critical">Critical</span><span>F-03: Fail-open on auth outage</span><span class="tgt">Target B</span></h3>
 <ul>
-<li><strong>Evidence</strong> (ledger <code>bad-fail-open</code>, head <code>d72e6134d7234523…</code>):<ul>
+<li><strong>Evidence</strong> (ledger <code>bad-fail-open</code>, head <code>fee319ec0c789d81…</code>):<ul>
 <li><code>auth_service_toggle → reachability false</code> → <code>call_tool allowed=true (&quot;tool call allowed&quot;)</code> → <code>auth_service_toggle → true</code>.</li>
 <li>The clean configuration returned <em>&quot;authentication unavailable; fail closed&quot;</em>.</li>
 </ul>
 </li>
-<li><strong>Impact:</strong> an attacker who can block or degrade the auth dependency (DNS, network, rate exhaustion) turns every credential check into &quot;allow&quot;.</li>
+<li><strong>Impact:</strong> this test demonstrated a fail-open decision under the tested outage condition (auth reachability switched off in the mock). <em>Potential impact, conditional on deployment:</em> where an attacker can cause or wait for such an outage (DNS, network, rate exhaustion), credential checks could be skipped.</li>
 <li><strong>Fix:</strong><ul>
 <li>Default-deny whenever the authorization decision can&#39;t be made.</li>
 <li>Don&#39;t cache allow decisions past a short time-to-live.</li>
 <li>Alert on auth-dependency failure.</li>
 </ul>
 </li>
-<li><strong>Re-test passes when</strong> test 4 shows the call refused during the outage with a fail-closed reason, and allowed again once auth recovers.</li>
+<li><strong>Re-test passes when</strong> test 4 shows the call refused during the outage with a fail-closed reason. Test 4 as run asserts only that refusal, so a check that calls are allowed again once auth recovers would be added for the re-test.</li>
 </ul>
 <h3 class="finding sev-high"><span class="badge high">High</span><span>F-04: Slow revocation</span><span class="tgt">Target B</span></h3>
 <ul>
-<li><strong>Evidence</strong> (ledger <code>bad-slow-revoke</code>, head <code>cdd63e74575c3c5d…</code>):<ul>
-<li>After <code>revoke allowed=true</code>, <strong>5</strong> further <code>call_tool</code> calls were allowed. Measured revoke latency was <strong>1146 ms</strong>.</li>
-<li>Later calls in the window were refused for <em>&quot;rate limit exceeded&quot;</em> and <em>&quot;credential lease expired&quot;</em>, and finally <em>&quot;credential revoked&quot;</em>.</li>
+<li><strong>Evidence</strong> (ledger <code>bad-slow-revoke</code>, head <code>682e15189e827e5f…</code>):<ul>
+<li>After <code>revoke allowed=true</code>, <strong>5</strong> further <code>call_tool</code> calls were allowed. Measured enforcement window: <strong>1168 ms</strong>, from just before the revoke request to the last accepted call (Section 3 definitions).</li>
+<li>Other calls in the window were refused for <em>&quot;rate limit exceeded&quot;</em>, then <em>&quot;credential lease expired&quot;</em>, and finally <em>&quot;credential revoked&quot;</em>. Rate-limit refusals are not evidence of revocation, and the accepted calls stopped when the credential lease expired, not at a revocation event.</li>
 </ul>
 </li>
-<li><strong>Impact:</strong> a captured credential keeps a window of about 1.2 s and 5 actions after the owner pulls it. That&#39;s enough for automated misuse.</li>
+<li><strong>Potential impact (conditional on deployment):</strong> in this run a revoked credential was accepted for 5 calls over 1168 ms; a window like this could allow automated misuse, depending on what the credential can reach.</li>
 <li><strong>Fix:</strong><ul>
 <li>Check revocation synchronously on every tool call; push revocations rather than waiting for a cache to expire.</li>
 <li>Keep credential lifetimes short.</li>
 </ul>
 </li>
-<li><strong>Re-test passes when</strong> test 3 shows 0 post-revoke successes and revoke latency at or below the agreed target (0 ms observed on the clean mock and on Target A).</li>
+<li><strong>Re-test passes when</strong> test 3 shows 0 post-revoke successes in the agreed observation window, and the enforcement delay (measured separately from the revoke API round-trip) is within a target agreed in writing before the re-test. No default target is assumed here. For reference, no post-revoke call was accepted on the clean mock or on Target A in their windows.</li>
 </ul>
 <h3 class="finding sev-medium"><span class="badge medium">Medium</span><span>F-05: Rate limit not enforced</span><span class="tgt">Target B</span></h3>
 <ul>
-<li><strong>Evidence</strong> (ledger <code>bad-no-rate-limit</code>, head <code>34dfe87080451f9f…</code>):<ul>
+<li><strong>Evidence</strong> (ledger <code>bad-no-rate-limit</code>, head <code>be5de03a3bb6e562…</code>):<ul>
 <li>The configured limit is 3 actions per 1000 ms, but a 5-call burst returned <code>allowed=true</code> <strong>5/5</strong>.</li>
-<li>The clean configuration refused 2 over-limit calls.</li>
+<li>The clean configuration refused 2 over-limit calls. The test asserts only that calls beyond the limit are refused.</li>
 </ul>
 </li>
-<li><strong>Impact:</strong> a runaway or hijacked agent can amplify spend, exfiltration volume or on-chain actions without bound.</li>
+<li><strong>Potential impacts, conditional on deployment:</strong> a runaway or hijacked agent could amplify spend, exfiltration volume or on-chain actions.</li>
 <li><strong>Fix:</strong> enforce a per-credential limit server-side, with a sliding window, and escalate to revocation when the limit is repeatedly hit.</li>
-<li><strong>Re-test passes when</strong> test 7 refuses every over-limit call.</li>
+<li><strong>Re-test passes when</strong> test 7 refuses every over-limit call and behavior at exactly the configured limit is specified and checked (calls up to the limit accepted, the next refused). Test 7 as run does not assert that boundary, so a boundary case would be added for the re-test.</li>
 </ul>
 <h3 class="finding sev-low"><span class="badge low">Low</span><span>F-06: Missing decision reasons</span><span class="tgt">Target B</span></h3>
 <ul>
-<li><strong>Evidence</strong> (ledger <code>bad-missing-reason</code>, head <code>cf78a8b8eb730c0b…</code>): 43 responses had no reason. The clean configuration gave a reason on every response.</li>
-<li><strong>Impact:</strong> incident responders can&#39;t tell <em>why</em> a call was allowed or denied, which slows containment and weakens the audit record.</li>
+<li><strong>Evidence</strong> (ledger <code>bad-missing-reason</code>, head <code>77bd76fbf00d571b…</code>): 43 responses had no reason (every response the harness observed from the tool-call, revoke, reissue and auth-toggle endpoints, allows and denies alike). The clean configuration gave a reason on every response.</li>
+<li><strong>Potential impact (conditional on deployment):</strong> responders may not be able to tell <em>why</em> a call was allowed or denied, which would weaken the audit record and could slow containment. This is an auditability observation; no direct tie to excessive agency is claimed.</li>
 <li><strong>Fix:</strong> return and log a machine-readable reason code on every allow and deny decision.</li>
-<li><strong>Re-test passes when</strong> test 8 reports every response carrying a reason.</li>
+<li><strong>Re-test passes when</strong> test 8 reports a reason on every observed response from those endpoints, allows and denies.</li>
 </ul>
 <h3 class="finding sev-info"><span class="badge info">Info</span><span>I-01: Unlock denials carry no reason</span><span class="tgt">Target A</span></h3>
 <ul>
 <li><strong>Evidence:</strong><ul>
-<li>5/5 replayed unlocks were refused (<code>allowed=false</code>) without a <code>reason</code> field in the API response.</li>
+<li>5/5 re-presented unlock operations were refused (<code>allowed=false</code>) without a <code>reason</code> field in the API response. On Target A the reason check covers denial responses only.</li>
 <li>The target&#39;s own ledger recorded each refusal and stayed valid.</li>
 </ul>
 </li>
 <li><strong>Suggestion:</strong> add a reason code to that response, to match the tool-call path.</li>
 </ul>
 <div class="avoid"><h2 style="margin-top:14px">Remediation roadmap</h2>
-<p style="margin:0 0 8px">Prioritized from findings F-01 to F-06 and note I-01 in Section 5, using each finding&rsquo;s own stated fix and re-test condition. Order follows severity. In this sample the F-items sit on a deliberately vulnerable mock, so the roadmap shows what a client would receive.</p><div class="lane now"><div class="lh"><b>Fix now</b><span>Critical: an attacker can act as the agent, bypass human approval, or turn an auth outage into &ldquo;allow&rdquo;</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-01</strong><br><span class="badge critical">Critical</span></td><td>Old credential accepted after reissue. Bind each credential to a generation counter and reject any generation other than the current one. Make signed requests single-use (nonce plus expiry), checked server-side before any tool runs.</td><td>Test 5 shows the old credential <em>and</em> the prior request body refused after reissue, over 3 consecutive runs.</td></tr><tr><td><strong>F-02</strong><br><span class="badge critical">Critical</span></td><td>HIGH-risk approval gate bypass. Require an approval that is fresh (short time-to-live), single-use, and bound to the exact tool and arguments. Verify it on the server at execution time, not in the agent.</td><td>Test 6 refuses missing, stale and mismatched approvals and accepts a fresh matching one.</td></tr><tr><td><strong>F-03</strong><br><span class="badge critical">Critical</span></td><td>Fail-open on auth outage. Default-deny whenever the authorization decision can&rsquo;t be made. Don&rsquo;t cache allow decisions past a short time-to-live. Alert on auth-dependency failure.</td><td>Test 4 shows the call refused during the outage with a fail-closed reason, and allowed again once auth recovers.</td></tr></tbody></table></div><div class="lane next"><div class="lh"><b>Next</b><span>High and Medium: a revoked credential keeps working briefly, and the rate limit is not enforced</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-04</strong><br><span class="badge high">High</span></td><td>Slow revocation. Check revocation synchronously on every tool call; push revocations rather than waiting for a cache to expire. Keep credential lifetimes short.</td><td>Test 3 shows 0 post-revoke successes and revoke latency at or below the agreed target.</td></tr><tr><td><strong>F-05</strong><br><span class="badge medium">Medium</span></td><td>Rate limit not enforced. Enforce a per-credential limit server-side, with a sliding window, and escalate to revocation when the limit is repeatedly hit.</td><td>Test 7 refuses every over-limit call.</td></tr></tbody></table></div><div class="lane later"><div class="lh"><b>Later</b><span>Low and Info: weaker audit trail and a missing reason code</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-06</strong><br><span class="badge low">Low</span></td><td>Missing decision reasons. Return and log a machine-readable reason code on every allow and deny decision.</td><td>Test 8 reports every response carrying a reason.</td></tr><tr><td><strong>I-01</strong><br><span class="badge info">Info</span></td><td>Unlock denials carry no reason (Target A). Add a reason code to that response, to match the tool-call path.</td><td>Suggestion only: Section 5 states no pass condition for this note.</td></tr></tbody></table></div><p class="fn">Each &ldquo;done when&rdquo; condition is taken from the matching finding in Section 5, except I-01, where Section 5 gives a suggestion and no pass condition.</p></div>
+<p style="margin:0 0 8px">Prioritized from findings F-01 to F-06 and note I-01 in Section 5, using each finding&rsquo;s own stated fix and re-test condition. Order follows severity. In this sample the F-items sit on a deliberately vulnerable mock, so the roadmap shows what a client would receive.</p><div class="lane now"><div class="lh"><b>Fix now</b><span>Critical: an attacker can act as the agent, bypass human approval, or turn an auth outage into &ldquo;allow&rdquo;</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-01</strong><br><span class="badge critical">Critical</span></td><td>Old credential accepted after reissue. Bind each credential to a generation counter and reject any generation other than the current one. Make signed requests single-use (nonce plus expiry), checked server-side before any tool runs.</td><td>Test 5 shows the old credential refused after reissue, over 3 consecutive runs; a separate case shows a resubmitted prior request body refused.</td></tr><tr><td><strong>F-02</strong><br><span class="badge critical">Critical</span></td><td>HIGH-risk approval gate bypass. Require an approval that is fresh (short time-to-live), single-use, and bound to the exact tool and arguments. Verify it on the server at execution time, not in the agent.</td><td>Test 6 refuses missing, stale and mismatched approvals, and an added valid-approval case shows a fresh matching approval accepted.</td></tr><tr><td><strong>F-03</strong><br><span class="badge critical">Critical</span></td><td>Fail-open on auth outage. Default-deny whenever the authorization decision can&rsquo;t be made. Don&rsquo;t cache allow decisions past a short time-to-live. Alert on auth-dependency failure.</td><td>Test 4 shows the call refused during the outage with a fail-closed reason, and an added recovery check shows calls allowed again once auth recovers.</td></tr></tbody></table></div><div class="lane next"><div class="lh"><b>Next</b><span>High and Medium: a revoked credential keeps working briefly, and the rate limit is not enforced</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-04</strong><br><span class="badge high">High</span></td><td>Slow revocation. Check revocation synchronously on every tool call; push revocations rather than waiting for a cache to expire. Keep credential lifetimes short.</td><td>Test 3 shows 0 post-revoke successes in the agreed window, and enforcement delay (separate from the revoke API round-trip) within a target agreed in writing before the re-test.</td></tr><tr><td><strong>F-05</strong><br><span class="badge medium">Medium</span></td><td>Rate limit not enforced. Enforce a per-credential limit server-side, with a sliding window, and escalate to revocation when the limit is repeatedly hit.</td><td>Test 7 refuses every over-limit call, and behavior at exactly the configured limit is specified and checked.</td></tr></tbody></table></div><div class="lane later"><div class="lh"><b>Later</b><span>Low and Info: weaker audit trail and a missing reason code</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-06</strong><br><span class="badge low">Low</span></td><td>Missing decision reasons. Return and log a machine-readable reason code on every allow and deny decision.</td><td>Test 8 reports a reason on every observed tool-call, revoke, reissue and auth-toggle response (allow and deny).</td></tr><tr><td><strong>I-01</strong><br><span class="badge info">Info</span></td><td>Unlock denials carry no reason (Target A). Add a reason code to that response, to match the tool-call path.</td><td>Suggestion only: Section 5 states no pass condition for this note.</td></tr></tbody></table></div><p class="fn">Each &ldquo;done when&rdquo; condition starts from the matching finding in Section 5; parts marked &ldquo;added&rdquo; are not asserted by the current harness test and would be added for the re-test. I-01 stays a suggestion only, with no pass condition.</p></div>
 <h2 class="pb">6. Evidence ledger excerpt and hash-chain verification</h2>
-<p>Target A run, harness ledger, 83 entries, head <code>0c8758d54c9fb603257e73354f6e64188e89c5e1c29a4b996cd8fa9f032068f3</code>. Hashes are truncated to 12 hex digits. Full ledger in <code>&lt;profile-out&gt;/evidence-ledger.json</code>.</p>
+<p>Target B, <code>bad-slow-revoke</code> configuration (the F-04 run), harness ledger from the hardened harness: 50 entries, SHA-256 chain, head <code>682e15189e827e5f5dac4bd47812a7b8ebde653daaab0a8fafe984f41cf38ac2</code>. This ledger was <strong>unsigned</strong> (no signing key supplied). Hashes below are truncated to 12 hex digits. In a real engagement the full evidence bundle (run IDs, tool versions, configuration, verification instructions; no secrets) is delivered through an agreed secure channel.</p>
 <table class="led"><colgroup><col style="width:8%"><col style="width:19%"><col style="width:35%"><col style="width:19%"><col style="width:19%"></colgroup>
 <thead>
-<tr>
-<th>Entry</th>
-<th>Type</th>
-<th>Message</th>
-<th>prevHash</th>
-<th>hash</th>
-</tr>
+<tr><th>Entry</th><th>Type</th><th>Message</th><th>prevHash</th><th>hash</th></tr>
 </thead>
-<tbody><tr>
-<td>1</td>
-<td>REVIEW_START</td>
-<td>Authorized review started for scope SAMPLE-DEMO-001</td>
-<td><code>000000000000</code></td>
-<td><code>7ccfe02fccfe</code></td>
-</tr>
-<tr>
-<td>6</td>
-<td>API_RESPONSE</td>
-<td>revoke HTTP 200; ok=true; sha256=3f05e1073854b2b8</td>
-<td><code>49b514408e3c</code></td>
-<td><code>d6b0ae2aea4b</code></td>
-</tr>
-<tr>
-<td>7</td>
-<td>API_RESPONSE</td>
-<td>post-revoke tool-call HTTP 200; allowed=false; reason_present=true; sha256=d2d9cd51a7f94e6f</td>
-<td><code>d6b0ae2aea4b</code></td>
-<td><code>2e9e2471c617</code></td>
-</tr>
-<tr>
-<td>8</td>
-<td>API_RESPONSE</td>
-<td>post-revoke tool-call HTTP 200; allowed=false; reason_present=true; sha256=4b61f687f25d2874</td>
-<td><code>2e9e2471c617</code></td>
-<td><code>b6e7ec92216b</code></td>
-</tr>
-<tr>
-<td>45</td>
-<td>API_RESPONSE</td>
-<td>replay unlock HTTP 200; allowed=false; reason_present=false; sha256=34ca5b686a3c84b1</td>
-<td><code>194b104642e5</code></td>
-<td><code>12005b83fcdf</code></td>
-</tr>
-<tr>
-<td>63</td>
-<td>API_RESPONSE</td>
-<td>re-auth: no approvals, no second factor; recovered=false; reason_present=true</td>
-<td><code>89f490959a79</code></td>
-<td><code>62cb869fbb7c</code></td>
-</tr>
-<tr>
-<td>64</td>
-<td>API_RESPONSE</td>
-<td>re-auth: insufficient approvals + second factor; recovered=false; reason_present=true</td>
-<td><code>62cb869fbb7c</code></td>
-<td><code>df9f22aac7ca</code></td>
-</tr>
-<tr>
-<td>65</td>
-<td>API_RESPONSE</td>
-<td>re-auth: sufficient approvals, missing second factor; recovered=false; reason_present=true</td>
-<td><code>df9f22aac7ca</code></td>
-<td><code>7c6a3d61b46d</code></td>
-</tr>
-<tr>
-<td>66</td>
-<td>API_RESPONSE</td>
-<td>re-auth: valid; recovered=true</td>
-<td><code>7c6a3d61b46d</code></td>
-<td><code>3448df21f4d6</code></td>
-</tr>
-<tr>
-<td>83</td>
-<td>TEST_CONCLUSION</td>
-<td>Test 8 … PASS</td>
-<td><code>a54429d69838</code></td>
-<td><code>0c8758d54c9f</code></td>
-</tr>
+<tbody><tr><td>1</td><td>REVIEW_START</td><td>Authorized review started for scope selftest-bad-slow-revoke (reason: safety gates passed)</td><td><code>000000000000</code></td><td><code>fbb4d5e8f58b</code></td></tr>
+<tr><td>3</td><td>API_RESPONSE</td><td>call_tool HTTP 200; allowed=true (reason: tool call allowed), before the revoke</td><td><code>5386c3c86734</code></td><td><code>a02d38a79577</code></td></tr>
+<tr><td>4</td><td>API_RESPONSE</td><td>revoke HTTP 200; allowed=true (reason: credential revoked)</td><td><code>a02d38a79577</code></td><td><code>65f5a03bd5ee</code></td></tr>
+<tr><td>5</td><td>API_RESPONSE</td><td>call_tool HTTP 200; allowed=true (reason: tool call allowed), after the revoke</td><td><code>65f5a03bd5ee</code></td><td><code>8b77b1176b11</code></td></tr>
+<tr><td>6</td><td>API_RESPONSE</td><td>call_tool HTTP 200; allowed=true (reason: tool call allowed), after the revoke</td><td><code>8b77b1176b11</code></td><td><code>08b2ba2e2e5e</code></td></tr>
+<tr><td>25</td><td>API_RESPONSE</td><td>call_tool HTTP 200; allowed=false (reason: credential revoked)</td><td><code>c8b5e40f4ab6</code></td><td><code>1f563d3f36de</code></td></tr>
+<tr><td>26</td><td>TEST_CONCLUSION</td><td>Test 3 &hellip; FAIL: 5 post-revoke call(s) succeeded</td><td><code>1f563d3f36de</code></td><td><code>cc6ce9035cea</code></td></tr>
+<tr><td>50</td><td>TEST_CONCLUSION</td><td>Test 8 &hellip; PASS</td><td><code>7923739dd1e4</code></td><td><code>682e15189e82</code></td></tr>
 </tbody></table>
-<p><strong>Verification (recomputed independently with <code>verifyEntries</code>):</strong></p>
-<table class="led"><colgroup><col style="width:45%"><col style="width:10%"><col style="width:45%"></colgroup>
+<p><strong>Verification (re-run from the saved ledger files with the harness&rsquo;s own <code>verify-ledger</code> script, which uses the same hashing code that writes the chain; the unit tests also recompute one entry hash with a separate SHA-256 implementation of the documented format):</strong></p>
+<table class="led v"><colgroup><col style="width:45%"><col style="width:10%"><col style="width:45%"></colgroup>
 <thead>
-<tr>
-<th>Ledger</th>
-<th>Entries</th>
-<th>Result</th>
-</tr>
+<tr><th>Ledger</th><th>Entries</th><th>Result</th></tr>
 </thead>
-<tbody><tr>
-<td>Target A run</td>
-<td>83</td>
-<td>valid</td>
-</tr>
-<tr>
-<td>Target A, one outcome edited (<code>allowed=false</code>→<code>true</code>, entry 7)</td>
-<td>83</td>
-<td><strong>invalid</strong>: <code>Invalid hash at ledger index 6</code></td>
-</tr>
-<tr>
-<td>Target A, one entry deleted</td>
-<td>82</td>
-<td><strong>invalid</strong>: <code>Broken prevHash at ledger index 5</code></td>
-</tr>
-<tr>
-<td>Target B ×7 configurations</td>
-<td>50 each</td>
-<td>valid (heads <code>5618fd3e…</code>, <code>533970c7…</code>, <code>b09cd92e…</code>, <code>dca7ab8b…</code>, <code>aa40af89…</code>, <code>e3607eb5…</code>, <code>934fabc8…</code>)</td>
-</tr>
+<tbody><tr><td><code>bad-slow-revoke</code> ledger as written</td><td>50</td><td>valid; head and count matched the sidecar; unsigned</td></tr>
+<tr><td>One outcome edited (<code>allowed=false</code>&rarr;<code>true</code>, entry 7)</td><td>50</td><td><strong>invalid</strong>: <code>Invalid hash at ledger index 6</code></td></tr>
+<tr><td>One entry deleted (entry 6)</td><td>49</td><td><strong>invalid</strong>: <code>Broken prevHash at ledger index 5</code></td></tr>
+<tr><td>Entries 3 and 4 swapped</td><td>50</td><td><strong>invalid</strong>: <code>Broken prevHash at ledger index 2</code></td></tr>
+<tr><td>Last 3 entries removed, chain checked alone</td><td>47</td><td><strong>valid, not detected</strong> (a shorter chain is still consistent)</td></tr>
+<tr><td>Last 3 entries removed, expected head and count supplied from the sidecar</td><td>47</td><td><strong>invalid</strong>: <code>Entry count 47 does not match expected 50</code></td></tr>
+<tr><td>Target B &times;7 configurations, as written</td><td>50 each</td><td>all valid, each matched its sidecar (heads <code>fb8f7fcd&hellip;</code> clean, <code>fee319ec&hellip;</code>, <code>682e1518&hellip;</code>, <code>7c6557b6&hellip;</code>, <code>d44a7ef9&hellip;</code>, <code>be5de03a&hellip;</code>, <code>77bd76fb&hellip;</code>); all unsigned</td></tr>
 </tbody></table>
-<h2>7. OWASP Top 10 for LLM Applications (2025) mapping</h2>
-<table class="avoid">
-<thead>
-<tr>
-<th>OWASP item</th>
-<th>Coverage in this engagement</th>
-<th>Result</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>LLM01 Prompt Injection</td>
-<td>promptfoo <code>prompt-injection</code> strategy (stub target only)</td>
-<td>No claim: stub</td>
-</tr>
-<tr>
-<td>LLM02 Sensitive Information Disclosure</td>
-<td>promptfoo <code>pii:direct</code>, <code>harmful:privacy</code> (stub only); post-revoke data-tool access (test 3)</td>
-<td>Target A: pass; stub: no claim</td>
-</tr>
-<tr>
-<td>LLM06 Excessive Agency</td>
-<td>Tests 3, 4, 5, 6, 8; promptfoo <code>excessive-agency</code> (stub)</td>
-<td>F-01–F-04, F-06 on B; A passes 3, 5, 6, 8</td>
-</tr>
-<tr>
-<td>LLM10 Unbounded Consumption</td>
-<td>Test 7</td>
-<td>F-05 on B; A not applicable</td>
-</tr>
-<tr>
-<td>LLM03, 04, 05, 07, 08, 09</td>
-<td>Not in scope for this sample</td>
-<td>none</td>
-</tr>
+<p style="break-inside:avoid"><strong>Extra signed run</strong> (clean configuration, 50 entries, throwaway in-memory HMAC key): the HMAC verified with that key and a different key was rejected (<code>HMAC signature does not verify</code>). Head <code>e0677e5c&hellip;</code>. The key was never written or printed and is discarded, so this run cannot be re-verified from this report.</p>
+
+<div class="assure"><h4>What this ledger does and does not prove</h4>
+<strong>It does detect</strong>, with no outside reference, an edit to, deletion of, or reordering of recorded entries anywhere in the file (the demonstrations above). Hashing is SHA-256 over a length-prefixed serialization of every field, and each entry is appended to the file and flushed as it is recorded, so a crash keeps the entries already written.
+<ul>
+<li><strong>Completeness at the tail needs an expected head or count.</strong> Removing entries from the end leaves a valid shorter chain. It is detected only when the verifier is given the expected head hash or entry count: from the sidecar written at export, or recorded elsewhere. A sidecar stored beside the ledger can be rewritten together with it, so real assurance needs the head recorded where the ledger&rsquo;s writer cannot alter it. No external anchoring was done for this sample.</li>
+<li><strong>Authenticity needs a signing key.</strong> SHA-256 is unkeyed, so without a key anyone who can rewrite the ledger and its sidecar can recompute a consistent chain. If a key is supplied via an environment variable, the head and count are signed with HMAC-SHA256 and the verifier checks it; the key is not stored. All 7 sample ledgers were unsigned. Only one extra run used a throwaway key, to exercise the signing path. A signature shows that the key holder vouched for that head; it does not show who wrote each entry.</li>
+<li><strong>Not storage-level immutability.</strong> The ledger is an ordinary file, and the harness does not stop later edits or deletion of it. OS-level append-only flags, write-once storage or external anchoring are the deployer&rsquo;s responsibility.</li>
+<li><strong>Not proof that events are true or complete.</strong> The ledger records what the harness observed and chose to record (normalized outcomes and, on Target A, response digests). It does not show that the target behaved as recorded or that nothing was omitted before recording. Timestamps come from the harness host&rsquo;s clock.</li>
+<li><strong>Not the target&rsquo;s ledger.</strong> For Target A only the target&rsquo;s own ledger-valid flag was read (74/74), which the harness did not recompute. The Target A harness ledger was written by an earlier ledger version (non-cryptographic chain hash); Target A was not re-run, so none of the SHA-256 claims on this page apply to it.</li>
+</ul>
+</div>
+<h2 class="pb">7. OWASP Top 10 for LLM Applications (2025) mapping</h2>
+<p style="margin:0 0 4px">&ldquo;Control relevant to this risk&rdquo; means a tested control bears on the risk. It does not mean the whole OWASP category was assessed.</p>
+<table class="def avoid"><colgroup><col style="width:19%"><col style="width:26%"><col style="width:14%"><col style="width:41%"></colgroup>
+<thead><tr><th>OWASP item</th><th>Controls relevant to this risk</th><th>Category assessed?</th><th>Evidence in this sample</th></tr></thead><tbody>
+<tr><td>LLM01 Prompt Injection</td><td>promptfoo <code>prompt-injection</code> strategy (stub target only)</td><td>No</td><td>Pipeline smoke test only; no claim about any real model.</td></tr>
+<tr><td>LLM02 Sensitive Information Disclosure</td><td>Test 3 (post-revocation access via the tested tool); promptfoo <code>pii:direct</code>, <code>harmful:privacy</code> (stub only)</td><td>No</td><td>Limited evidence about post-revocation access through the one tool tested on Target A (0/31). Not a pass for the category. Stub: no claim.</td></tr>
+<tr><td>LLM06 Excessive Agency</td><td>Tests 3, 4, 5, 6 (revocation, fail-closed, credential reuse, approval gates); promptfoo <code>excessive-agency</code> (stub)</td><td>Partly: credential and approval controls only</td><td>F-01 to F-04 on Target B. On Target A, tests 3, 5 and 6 passed within the scope tested. Tool-permission scoping and agent behavior were not assessed.</td></tr>
+<tr><td>LLM10 Unbounded Consumption</td><td>Test 7 (rate limit)</td><td>No</td><td>F-05 on Target B; not applicable to Target A. Model-level resource consumption was not assessed.</td></tr>
+<tr><td>Supporting: auditability</td><td>Test 8 (decision reasons, ledger)</td><td>Not mapped</td><td>F-06 on Target B and I-01 on Target A are auditability observations, not mapped to an OWASP category.</td></tr>
+<tr><td>LLM03, 04, 05, 07, 08, 09</td><td>Not in scope for this sample</td><td>No</td><td>none</td></tr>
 </tbody></table>
 <h2>8. Caveats</h2>
 <ul>
 <li>Target A was exercised only through its local test adapter, which uses a simulated clock. The latency numbers are local loopback wall-clock times, not a production SLA.</li>
-<li>On Target A, &quot;replay&quot; means presenting the revoked credential after revocation. The adapter can&#39;t present a pre-revocation credential <em>after</em> re-authorization, so that variant wasn&#39;t tested there (it was on Target B).</li>
+<li>On Target A, &quot;replay&quot; means revoked-credential reuse: presenting the revoked credential, and re-presenting the unlock operation, after revocation. The adapter can&#39;t present a pre-revocation credential <em>after</em> re-authorization, so that variant wasn&#39;t tested there (it was on Target B).</li>
 <li>The adapter has no &quot;stale approval&quot; input. The approval matrix covers missing, insufficient, missing-second-factor and valid inputs; stale and mismatched approvals were covered on Target B.</li>
 <li>Target B is a deliberately vulnerable mock. Its findings show what the harness detects, not flaws in any real product.</li>
+<li>Timing: &ldquo;0&rdquo; enforcement delay means no post-revocation call was accepted in the window, sampled about every 100 ms; it is not a measured zero.</li>
+<li>Target B tests have no in-test positive controls; the clean configuration serves as the control (Section 3). The 74/74 ledger result on Target A is the target&rsquo;s own flag. The harness ledger is tamper-evident, not tamper-proof: it is unsigned unless a key is supplied, detects removal of trailing entries only against an expected head or count, and is not proof that recorded events are true or complete (Section 6).</li>
 </ul>
 <h2>Appendix A: Commands</h2>
 <pre><code class="language-bash"># Target A: start adapter on loopback with a fresh in-memory 48-char token, run mapped tests, stop
 cd agent-harness
-npm run target:reference                    # -&gt; &lt;profile-out&gt;/{report.md,results.json,evidence-ledger.json}
+# writes report.md, results.json and evidence-ledger.* to &lt;profile-out&gt;
+npm run target:reference
 npm run target:reference:adapter-test       # adapter&#39;s own test: ok 1, pass 1, fail 0
 
 # Target B: clean + 6 flawed configurations, expected-failure matrix
-npm run selftest                            # -&gt; selftest-out/matrix.md (7/7 PASS), HARNESS_SELFTEST_EXIT_CODE=0
+# 8/8 PASS (7 configurations + 1 signed run); HARNESS_SELFTEST_EXIT_CODE=0
+npm run selftest
 npm run typecheck                           # tsc --noEmit, clean
+npm run test:ledger                         # ledger unit checks (also run by selftest)
 
 # Prompt-level smoke (local stub only)
-cd promptfoo &amp;&amp; npm run redteam:smoke:generate &amp;&amp; npm run redteam:smoke:eval   # Oct 20 run: 18 pass / 0 fail / 0 error
+cd promptfoo &amp;&amp; npm run redteam:smoke:generate &amp;&amp; npm run redteam:smoke:eval   # Oct 20 pipeline smoke test: 18/18 expected stub responses; real-model security not evaluated
 
 # Ledger verification
-npm run verify-ledger -- &lt;profile-out&gt;/evidence-ledger.json --tamper-demo   # VALID; edit and deletion both detected
-for f in selftest-out/*/evidence-ledger.json; do npm run -s verify-ledger -- &quot;$f&quot;; done          # 7/7 VALID
+# Head and count are read from the sidecar next to the file, or pass --expected-head / --expected-count.
+# If LEDGER_SIGNING_KEY is set, the HMAC signature is required to verify; the key is never printed.
+npm run verify-ledger -- selftest-out/bad-slow-revoke/evidence-ledger.jsonl --tamper-demo
+# expect: VALID; edit, delete, swap detected; tail truncation detected only against an expected head/count
+for f in selftest-out/*/evidence-ledger.jsonl; do npm run -s verify-ledger -- &quot;$f&quot;; done
+# expect: all VALID, head matched sidecar
 </code></pre>
 
 </body></html>
