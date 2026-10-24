@@ -26,10 +26,100 @@ ul, ol { padding-left: 18px; margin: 4px 0 8px; } li { margin: 2px 0; }
 .badge { display:inline-block; padding: 0 6px; border-radius: 9px; font-size: 7.8pt; font-weight: 700; color:#fff; white-space: nowrap; }
 .critical{background:#991b1b}.high{background:#c2410c}.medium{background:#b45309}.low{background:#0369a1}.info{background:#64748b}.pass{background:#15803d}.na{background:#94a3b8}
 h3 + ul { break-before: avoid; }
+
+/* ===== premium presentation layer (additive) ===== */
+:root { --fail:#b91c1c; --ok:#15803d; --na:#94a3b8; --nv:#b45309; --soft:#f8fafc; }
+.pb, h2.pb { break-before: page !important; }
+th:first-child { white-space:nowrap; }
+.fnd { table-layout:fixed; font-size:8.2pt; } .fnd td:nth-child(5) { white-space:nowrap; } .fnd td, .fnd th { padding:3px 5px; } .fnd { break-inside: avoid; } .fnd td code { font-size:7.6pt; overflow-wrap:anywhere; } .fnd td:first-child{white-space:nowrap}
+.res { break-inside: avoid; }
+.avoid { break-inside: avoid; }
+.cover-sub { font-size: 11pt; color: var(--muted); margin: -4px 0 12px; }
+.cover-rule { height: 4px; background: linear-gradient(90deg,#0e7490,#0e7490 30%,#e2e8f0 30%); border-radius: 2px; margin: 0 0 10px; }
+h1 { letter-spacing:-.01em; }
+/* unified severity / state badges */
+.badge { text-transform: uppercase; letter-spacing:.04em; font-size:7pt; padding: 1px 7px; line-height:1.5; }
+.badge.fail{background:#b91c1c}
+.badge.nv{background:#fff;color:#b45309;border:1px solid #b45309}
+td .badge { vertical-align: baseline; }
+/* severity tint on table rows and finding headings */
+tr:has(.badge.critical) td:first-child { border-left:4px solid #991b1b; }
+tr:has(.badge.high) td:first-child { border-left:4px solid #c2410c; }
+tr:has(.badge.medium) td:first-child { border-left:4px solid #b45309; }
+tr:has(.badge.low) td:first-child { border-left:4px solid #0369a1; }
+tr:has(.badge.info) td:first-child { border-left:4px solid #64748b; }
+tr:has(.badge.critical) td { background:#fef2f2; } tr:has(.badge.high) td { background:#fff7ed; }
+tr:has(.badge.medium) td { background:#fffbeb; } tr:has(.badge.low) td { background:#f0f9ff; }
+tr:has(.badge.info) td { background:#f8fafc; }
+h3.finding { margin-top:12px !important; display:flex; align-items:center; gap:8px; border-left:5px solid var(--sev); background:var(--soft); padding:5px 10px; border-radius:0 4px 4px 0; margin:16px 0 6px; }
+h3.finding .badge { font-size:7.5pt; }
+h3.sev-critical{--sev:#991b1b} h3.sev-high{--sev:#c2410c} h3.sev-medium{--sev:#b45309} h3.sev-low{--sev:#0369a1} h3.sev-info{--sev:#64748b}
+h3.finding .tgt { margin-left:auto; font-size:8pt; font-weight:500; color:var(--muted); }
+/* boxes */
+.box { border:1px solid var(--line); border-radius:6px; padding:10px 14px; background:#fff; }
+.box h4 { margin:0 0 4px; font-size:9pt; text-transform:uppercase; letter-spacing:.06em; color:var(--brand); }
+.limits { border:1px solid #cbd5e1; border-left:5px solid var(--brand); background:#f8fafc; border-radius:6px; padding:10px 16px 8px; margin:14px 0; }
+.limits h2 { margin:0 0 6px; border:0; padding:0; font-size:12.5pt; }
+.limits .cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.limits h4 { margin:0 0 3px; font-size:8.5pt; text-transform:uppercase; letter-spacing:.06em; }
+.limits ul { margin:2px 0 4px; padding-left:15px; font-size:9pt; }
+.limits .key { margin:6px 0 2px; padding:7px 10px; background:#fff7ed; border:1px solid #fed7aa; border-radius:4px; font-size:9pt; }
+/* executive overview */
+.verdict { background:linear-gradient(135deg,#0f172a,#155e75); color:#fff; border-radius:8px; padding:11px 16px; margin:6px 0 10px; }
+.verdict .k { font-size:8pt; text-transform:uppercase; letter-spacing:.1em; color:#a5f3fc; font-weight:700; }
+.verdict .h { font-size:13.5pt; line-height:1.3; font-weight:700; margin:3px 0 6px; }
+.verdict .s { font-size:9pt; color:#e2e8f0; }
+.grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px; }
+.sevrow { display:grid; grid-template-columns: 62px 1fr 18px; align-items:center; gap:8px; margin:5px 0; font-size:9pt; }
+.sevrow .bar { height:12px; background:#f1f5f9; border-radius:6px; overflow:hidden; }
+.sevrow .bar i { display:block; height:100%; border-radius:6px; }
+.sevrow b { text-align:right; font-size:10.5pt; }
+.sevnote { font-size:8pt; color:var(--muted); margin-top:6px; line-height:1.35; }
+.cmp { width:100%; table-layout:fixed; border-collapse:collapse; font-size:8.4pt; margin:2px 0 0; }
+.cmp th, .cmp td { border:0; border-bottom:1px solid var(--line); padding:3px 4px; vertical-align:middle; background:none !important; border-left:0 !important; white-space:normal; }
+.cmp th { background:none; font-size:8pt; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+.cmp td.n { font-weight:700; text-align:center; font-size:9.5pt; white-space:nowrap; }
+.cmp td:first-child { white-space:normal; }
+.take { display:grid; grid-template-columns: 26px 1fr; gap:10px; margin:7px 0; align-items:start; }
+.take .no { width:22px; height:22px; border-radius:50%; background:var(--brand); color:#fff; font-weight:700; text-align:center; line-height:22px; font-size:9.5pt; }
+.take p { margin:0; font-size:9pt; line-height:1.45; }
+.caveat { border-left:4px solid #b45309; background:#fffbeb; padding:7px 12px; border-radius:0 4px 4px 0; font-size:8.8pt; margin-top:10px; }
+/* coverage matrix */
+.legend { display:flex; flex-wrap:wrap; gap:6px 16px; margin:4px 0 10px; font-size:8.5pt; }
+.legend span { display:inline-flex; align-items:center; gap:5px; }
+.cov { display:grid; grid-template-columns: 2.1fr 1.55fr 1.55fr; gap:4px; font-size:8.6pt; }
+.cov .hd { font-size:8pt; text-transform:uppercase; letter-spacing:.05em; font-weight:700; color:var(--muted); padding:2px 6px; }
+.cov .hd small { display:block; text-transform:none; letter-spacing:0; font-weight:500; }
+.cov .row { background:var(--soft); border:1px solid var(--line); border-radius:4px; padding:5px 8px; display:flex; flex-direction:column; justify-content:center; }
+.cov .row b { font-size:9pt; } .cov .row span { font-size:7.8pt; color:var(--muted); }
+.cell { border-radius:4px; padding:5px 8px; display:flex; gap:7px; align-items:center; min-height:40px; border:1px solid transparent; }
+.cell .ic { flex:0 0 18px; width:18px; height:18px; border-radius:50%; text-align:center; line-height:18px; font-weight:700; font-size:9pt; }
+.cell .tx { font-size:8pt; line-height:1.3; } .cell .tx b { display:block; font-size:8.4pt; }
+.c-pass{background:#f0fdf4;border-color:#86efac} .c-pass .ic{background:#15803d;color:#fff} .c-pass b{color:#166534}
+.c-fail{background:#fef2f2;border-color:#fca5a5} .c-fail .ic{background:#b91c1c;color:#fff} .c-fail b{color:#991b1b}
+.c-na{background:#f1f5f9;border-color:#cbd5e1} .c-na .ic{background:#94a3b8;color:#fff} .c-na b{color:#475569}
+.c-nv{background:#fff;border:1px dashed #b45309} .c-nv .ic{background:#fff;color:#b45309;border:1.5px solid #b45309} .c-nv b{color:#92400e}
+.sw { width:12px; height:12px; border-radius:50%; display:inline-block; }
+.sw.p{background:#15803d}.sw.f{background:#b91c1c}.sw.n{background:#94a3b8}.sw.v{background:#fff;border:1.5px solid #b45309;width:11px;height:11px}
+.fn { font-size:8.2pt; color:var(--muted); margin:8px 0 0; line-height:1.4; }
+h3.finding + ul { margin-top:2px; } h3.finding ~ ul > li { margin:1px 0; } h3.finding ~ ul { line-height:1.4; }
+.led { table-layout:fixed; font-size:8pt; } .led td, .led th { padding:3px 5px; } .led td code { white-space:nowrap; font-size:7.4pt; word-break:normal; overflow-wrap:normal; padding:0; } .led td:nth-child(2) { white-space:nowrap; font-size:7.6pt; } .led td:first-child, .led th:first-child { white-space:nowrap; }
+/* roadmap */
+.lane { border:1px solid var(--line); border-radius:6px; margin:0 0 12px; overflow:hidden; break-inside:avoid; }
+.lane .lh { display:flex; align-items:baseline; gap:10px; padding:6px 12px; color:#fff; }
+.lane .lh b { font-size:11pt; } .lane .lh span { font-size:8.5pt; opacity:.92; }
+.lane.now .lh{background:#991b1b}.lane.next .lh{background:#c2410c}.lane.later .lh{background:#0369a1}
+.lane table { margin:0; font-size:8.5pt; border:0; }
+.lane th, .lane td { border-left:0; border-right:0; background:none !important; }
+.lane td:first-child { border-left:0 !important; }
+.lane th { background:#f8fafc !important; font-size:8pt; }
+.lane td:first-child { white-space:nowrap; width:80px; } .lane col.c1{width:80px}
+.lane td .badge { display:inline-block; margin-top:3px; }
 </style></head><body>
 <div class="banner"><strong>SAMPLE: illustrative engagement; not a client.</strong> Every number below comes from real runs on a local test box. The targets are a reference implementation and a mock that was deliberately made vulnerable, both on loopback. No client system was tested.</div>
 
-<div class="cover-kicker">Cirigliano Security · AI Agent Security Review</div><h1>AI Agent Security Review: Sample Report</h1>
+<div class="cover-rule"></div><div class="cover-kicker">Cirigliano Security · AI Agent Security Review</div><h1>AI Agent Security Review: Sample Report</h1>
+<p class="cover-sub">An engineering-focused assessment of agent permissions and execution controls.</p>
 <table>
 <thead>
 <tr>
@@ -58,6 +148,69 @@ h3 + ul { break-before: avoid; }
 <td>agent test harness (tests 3–8, hash-chained evidence ledger), promptfoo red-team smoke</td>
 </tr>
 </tbody></table>
+
+<div class="limits avoid">
+<h2>What this report does and does not show</h2>
+<div class="cols">
+<div><h4 style="color:#15803d">What it shows</h4><ul>
+<li>How a review is run, and the evidence it produces: revocation, replay, approval-gate, decision-reason and audit-ledger tests, each with a positive control and a tamper-evident ledger.</li>
+<li>That the method detects each of the 6 flaw types deliberately injected into a mock service.</li>
+<li>How one reference implementation behaved on the tests that applied to it.</li>
+</ul></div>
+<div><h4 style="color:#b45309">What it does not show</h4><ul>
+<li>That any real system is secure. Two areas could not be tested on the reference implementation, and the prompt-level run used a scripted stub, so it says nothing about any real model.</li>
+<li>Real-world effectiveness. Timings are local loopback wall-clock times, not a production SLA.</li>
+<li>Flaws in any real product. Target B is deliberately vulnerable.</li>
+</ul></div>
+</div>
+<div class="key"><strong>A technically correct result is not comprehensive AI-agent security assurance.</strong> This sample proves the method, not real-world effectiveness. Broader LLM red teaming is an additional service, not the focus of this review.</div>
+</div>
+
+<h2 class="pb" style="margin-top:0">Executive overview</h2>
+<div class="verdict"><div class="k">Headline result</div>
+<div class="h">On the reference implementation, every control the test interface could exercise held: no findings. The method also caught all 6 flaws deliberately built into a mock service.</div>
+<div class="s">This is a demonstration of the review method on local test systems. It is not a rating of any real product.</div></div>
+<div class="grid2">
+<div class="box"><h4>Findings by severity</h4>
+<div class="sevrow"><span><span class="badge critical">Critical</span></span><span class="bar"><i class="critical" style="width:100%"></i></span><b>3</b></div><div class="sevrow"><span><span class="badge high">High</span></span><span class="bar"><i class="high" style="width:33%"></i></span><b>1</b></div><div class="sevrow"><span><span class="badge medium">Medium</span></span><span class="bar"><i class="medium" style="width:33%"></i></span><b>1</b></div><div class="sevrow"><span><span class="badge low">Low</span></span><span class="bar"><i class="low" style="width:33%"></i></span><b>1</b></div><div class="sevrow"><span><span class="badge info">Info</span></span><span class="bar"><i class="info" style="width:33%"></i></span><b>1</b></div>
+<div class="sevnote">6 findings (F-01 to F-06) plus 1 note. F-01 to F-06 are on Target B (injected flaws). The Info note, I-01, is on Target A, which has no Critical, High, Medium or Low findings.</div></div>
+<div class="box"><h4>Results at a glance</h4>
+<table class="cmp"><colgroup><col style="width:42%"><col style="width:29%"><col style="width:29%"></colgroup><thead><tr><th></th><th style="text-align:center">Target A</th><th style="text-align:center">Target B</th></tr></thead><tbody>
+<tr><td>What it is</td><td class="n" style="font-size:7.6pt;font-weight:600;white-space:normal">Reference implementation</td><td class="n" style="font-size:7.6pt;font-weight:600;white-space:normal">Mock service, injected flaws</td></tr>
+<tr><td>Findings</td><td class="n" style="color:#15803d">0</td><td class="n" style="color:#b91c1c">6</td></tr>
+<tr><td>Applicable tests passed</td><td class="n" style="color:#15803d">4 of 4</td><td class="n">clean: 6 of 6</td></tr>
+<tr><td>Calls that worked after revoke</td><td class="n">0 of 31</td><td class="n">F-04: 5 calls</td></tr>
+<tr><td>Replays accepted</td><td class="n">0 of 10</td><td class="n">F-01 caught</td></tr>
+<tr><td>Approval gates as expected</td><td class="n">9 of 9</td><td class="n">F-02 caught</td></tr>
+<tr><td>Not applicable</td><td class="n">2 tests</td><td class="n">0</td></tr>
+<tr><td>Injected flaws caught</td><td class="n">n/a</td><td class="n" style="color:#15803d">6 of 6</td></tr>
+</tbody></table></div>
+</div>
+<h3 style="margin:6px 0 4px;color:#0e7490">Three key takeaways</h3>
+<div class="take"><div class="no">1</div><p><strong>Revoked credentials stopped working at once on Target A.</strong> 0 of 31 tool calls succeeded after revocation, the first was refused 3 ms after the revoke returned, and 0 of 10 replays of the captured credential were accepted.</p></div>
+<div class="take"><div class="no">2</div><p><strong>Approval gates and the audit trail held, and the evidence can be checked.</strong> All 9 of 9 approval-gate outcomes matched expectations and the target&rsquo;s own ledger verified on 74 of 74 snapshots. Every run writes a hash-chained ledger; all 8 verify, and an edited entry and a deleted entry were both detected.</p></div>
+<div class="take"><div class="no">3</div><p><strong>The method finds real classes of control failure.</strong> Each of the 6 injected flaws (3 Critical, 1 High, 1 Medium, 1 Low) produced exactly one failing test, while the clean configuration passed 6 of 6. The remediation roadmap (page 9) turns these into a fix order.</p></div>
+<div class="caveat"><strong>Honest limits, still in force:</strong> two tests (fail-closed on auth outage, rate-limit burst) were <strong>not applicable</strong> to Target A and are not counted as passes. The prompt-level red team ran only against a scripted stub and is <strong>not validated against a real model</strong>. Latency figures are local loopback times, not a production SLA.</div>
+
+<h2 class="pb">Assessment coverage</h2>
+<p style="margin:0 0 4px">Every cell below is taken from the results in Sections 4 and 5. Nothing is shown as passed unless it was run.</p>
+<div class="legend">
+<span><i class="sw p"></i>Tested and passed</span><span><i class="sw f"></i>Tested and failed</span><span><i class="sw n"></i>Not applicable</span><span><i class="sw v"></i>Not tested or not validated against a real model</span>
+</div>
+<div class="cov">
+<div class="hd">Test area</div><div class="hd">Target A<small>reference implementation</small></div><div class="hd">Target B<small>deliberately vulnerable mock</small></div>
+<div class="row"><b>Revoke latency / post-revoke use</b><span>Test 3</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>0/31 post-revoke successes</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-04 detected (flaw injected)</span></div>
+<div class="row"><b>Fail-closed on auth outage</b><span>Test 4</span></div><div class="cell c-na"><span class="ic">&ndash;</span><span class="tx"><b>Not applicable</b>No adapter control</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-03 detected (flaw injected)</span></div>
+<div class="row"><b>Replay of captured credential</b><span>Test 5</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>0/10 replays accepted</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-01 detected (flaw injected)</span></div>
+<div class="row"><b>Approval gates</b><span>Test 6</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>9/9 as expected</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-02 detected (flaw injected)</span></div>
+<div class="row"><b>Rate limit (burst)</b><span>Test 7</span></div><div class="cell c-na"><span class="ic">&ndash;</span><span class="tx"><b>Not applicable</b>No matching adapter action</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-05 detected (flaw injected)</span></div>
+<div class="row"><b>Decision reasons + ledger integrity</b><span>Test 8</span></div><div class="cell c-pass"><span class="ic">&#10003;</span><span class="tx"><b>Tested and passed</b>Ledger valid 74/74; note I-01</span></div><div class="cell c-fail"><span class="ic">&#10005;</span><span class="tx"><b>Tested and failed</b>F-06 detected (flaw injected)</span></div>
+<div class="row"><b>Prompt-level red team</b><span>promptfoo smoke run</span></div><div class="cell c-nv"><span class="ic">?</span><span class="tx"><b>Not validated against a real model</b>Scripted stub only; not run on this target</span></div><div class="cell c-nv"><span class="ic">?</span><span class="tx"><b>Not validated against a real model</b>Scripted stub only; not run on this target</span></div>
+</div>
+<p class="fn"><strong>Reading Target B:</strong> &ldquo;failed&rdquo; means the harness caught a flaw that was deliberately injected into that configuration. The clean mock configuration passed all 6 tests.</p>
+<p class="fn"><strong>Reading Target A:</strong> &ldquo;not applicable&rdquo; means the test interface has no control for that test, so it was not run and is not counted as a pass. Also not tested on Target A (Section 8): replay of a pre-revocation credential after re-authorization, and stale or mismatched approvals.</p>
+<p class="fn"><strong>Prompt-level row:</strong> the 18 generated attacks ran only against a scripted stub that gives fixed refusals. That shows the pipeline works. It is not evidence about any real model or agent.</p>
+
 <h2>1. Executive summary</h2>
 <ul>
 <li><strong>Target A (reference fail-closed custody implementation): no findings in the tests that applied.</strong><ul>
@@ -170,7 +323,7 @@ h3 + ul { break-before: avoid; }
 </li>
 </ol>
 <h2>4. Results: Target A (reference fail-closed custody implementation)</h2>
-<table>
+<table class="res" style="table-layout:fixed"><colgroup><col style="width:4%"><col style="width:26%"><col style="width:15%"><col style="width:55%"></colgroup>
 <thead>
 <tr>
 <th>#</th>
@@ -217,7 +370,7 @@ h3 + ul { break-before: avoid; }
 </tr>
 </tbody></table>
 <h2>5. Findings</h2>
-<table>
+<table class="fnd"><colgroup><col style="width:7%"><col style="width:12%"><col style="width:22%"><col style="width:31%"><col style="width:7%"><col style="width:21%"></colgroup>
 <thead>
 <tr>
 <th>ID</th>
@@ -285,7 +438,7 @@ h3 + ul { break-before: avoid; }
 <td>none</td>
 </tr>
 </tbody></table>
-<h3>F-01: Old credential accepted after reissue (Critical)</h3>
+<h3 class="finding sev-critical"><span class="badge critical">Critical</span><span>F-01: Old credential accepted after reissue</span><span class="tgt">Target B</span></h3>
 <ul>
 <li><strong>Evidence</strong> (ledger <code>bad-replay-accept</code>, entries 32–36, head <code>ec46c18a574e6ca9…</code>):<ul>
 <li><code>reissue allowed=true</code> → <code>call_tool allowed=true</code> → <code>revoke allowed=true</code> → <code>reissue allowed=true</code> → <code>call_tool allowed=true (&quot;tool call allowed&quot;)</code>. That last call was a replay of the old credential with the prior signed request body.</li>
@@ -300,7 +453,7 @@ h3 + ul { break-before: avoid; }
 </li>
 <li><strong>Re-test passes when</strong> test 5 shows the old credential <em>and</em> the prior request body refused after reissue, over 3 consecutive runs.</li>
 </ul>
-<h3>F-02: HIGH-risk approval gate bypass (Critical)</h3>
+<h3 class="finding sev-critical"><span class="badge critical">Critical</span><span>F-02: HIGH-risk approval gate bypass</span><span class="tgt">Target B</span></h3>
 <ul>
 <li><strong>Evidence</strong> (ledger <code>bad-no-approval-check</code>, head <code>f9962bd2504dac22…</code>):<ul>
 <li>Three HIGH-risk <code>sign_tx</code> calls returned <code>allowed=true</code> (<em>&quot;tool call allowed&quot;</em>): with no approval, with a stale approval, and with an approval for a different action.</li>
@@ -315,7 +468,7 @@ h3 + ul { break-before: avoid; }
 </li>
 <li><strong>Re-test passes when</strong> test 6 refuses missing, stale and mismatched approvals and accepts a fresh matching one.</li>
 </ul>
-<h3>F-03: Fail-open on auth outage (Critical)</h3>
+<h3 class="finding sev-critical"><span class="badge critical">Critical</span><span>F-03: Fail-open on auth outage</span><span class="tgt">Target B</span></h3>
 <ul>
 <li><strong>Evidence</strong> (ledger <code>bad-fail-open</code>, head <code>d72e6134d7234523…</code>):<ul>
 <li><code>auth_service_toggle → reachability false</code> → <code>call_tool allowed=true (&quot;tool call allowed&quot;)</code> → <code>auth_service_toggle → true</code>.</li>
@@ -331,7 +484,7 @@ h3 + ul { break-before: avoid; }
 </li>
 <li><strong>Re-test passes when</strong> test 4 shows the call refused during the outage with a fail-closed reason, and allowed again once auth recovers.</li>
 </ul>
-<h3>F-04: Slow revocation (High)</h3>
+<h3 class="finding sev-high"><span class="badge high">High</span><span>F-04: Slow revocation</span><span class="tgt">Target B</span></h3>
 <ul>
 <li><strong>Evidence</strong> (ledger <code>bad-slow-revoke</code>, head <code>cdd63e74575c3c5d…</code>):<ul>
 <li>After <code>revoke allowed=true</code>, <strong>5</strong> further <code>call_tool</code> calls were allowed. Measured revoke latency was <strong>1146 ms</strong>.</li>
@@ -346,7 +499,7 @@ h3 + ul { break-before: avoid; }
 </li>
 <li><strong>Re-test passes when</strong> test 3 shows 0 post-revoke successes and revoke latency at or below the agreed target (0 ms observed on the clean mock and on Target A).</li>
 </ul>
-<h3>F-05: Rate limit not enforced (Medium)</h3>
+<h3 class="finding sev-medium"><span class="badge medium">Medium</span><span>F-05: Rate limit not enforced</span><span class="tgt">Target B</span></h3>
 <ul>
 <li><strong>Evidence</strong> (ledger <code>bad-no-rate-limit</code>, head <code>34dfe87080451f9f…</code>):<ul>
 <li>The configured limit is 3 actions per 1000 ms, but a 5-call burst returned <code>allowed=true</code> <strong>5/5</strong>.</li>
@@ -357,14 +510,14 @@ h3 + ul { break-before: avoid; }
 <li><strong>Fix:</strong> enforce a per-credential limit server-side, with a sliding window, and escalate to revocation when the limit is repeatedly hit.</li>
 <li><strong>Re-test passes when</strong> test 7 refuses every over-limit call.</li>
 </ul>
-<h3>F-06: Missing decision reasons (Low)</h3>
+<h3 class="finding sev-low"><span class="badge low">Low</span><span>F-06: Missing decision reasons</span><span class="tgt">Target B</span></h3>
 <ul>
 <li><strong>Evidence</strong> (ledger <code>bad-missing-reason</code>, head <code>cf78a8b8eb730c0b…</code>): 43 responses had no reason. The clean configuration gave a reason on every response.</li>
 <li><strong>Impact:</strong> incident responders can&#39;t tell <em>why</em> a call was allowed or denied, which slows containment and weakens the audit record.</li>
 <li><strong>Fix:</strong> return and log a machine-readable reason code on every allow and deny decision.</li>
 <li><strong>Re-test passes when</strong> test 8 reports every response carrying a reason.</li>
 </ul>
-<h3>I-01: Unlock denials carry no reason (Info, Target A)</h3>
+<h3 class="finding sev-info"><span class="badge info">Info</span><span>I-01: Unlock denials carry no reason</span><span class="tgt">Target A</span></h3>
 <ul>
 <li><strong>Evidence:</strong><ul>
 <li>5/5 replayed unlocks were refused (<code>allowed=false</code>) without a <code>reason</code> field in the API response.</li>
@@ -373,9 +526,11 @@ h3 + ul { break-before: avoid; }
 </li>
 <li><strong>Suggestion:</strong> add a reason code to that response, to match the tool-call path.</li>
 </ul>
-<h2>6. Evidence ledger excerpt and hash-chain verification</h2>
+<div class="avoid"><h2 style="margin-top:14px">Remediation roadmap</h2>
+<p style="margin:0 0 8px">Prioritized from findings F-01 to F-06 and note I-01 in Section 5, using each finding&rsquo;s own stated fix and re-test condition. Order follows severity. In this sample the F-items sit on a deliberately vulnerable mock, so the roadmap shows what a client would receive.</p><div class="lane now"><div class="lh"><b>Fix now</b><span>Critical: an attacker can act as the agent, bypass human approval, or turn an auth outage into &ldquo;allow&rdquo;</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-01</strong><br><span class="badge critical">Critical</span></td><td>Old credential accepted after reissue. Bind each credential to a generation counter and reject any generation other than the current one. Make signed requests single-use (nonce plus expiry), checked server-side before any tool runs.</td><td>Test 5 shows the old credential <em>and</em> the prior request body refused after reissue, over 3 consecutive runs.</td></tr><tr><td><strong>F-02</strong><br><span class="badge critical">Critical</span></td><td>HIGH-risk approval gate bypass. Require an approval that is fresh (short time-to-live), single-use, and bound to the exact tool and arguments. Verify it on the server at execution time, not in the agent.</td><td>Test 6 refuses missing, stale and mismatched approvals and accepts a fresh matching one.</td></tr><tr><td><strong>F-03</strong><br><span class="badge critical">Critical</span></td><td>Fail-open on auth outage. Default-deny whenever the authorization decision can&rsquo;t be made. Don&rsquo;t cache allow decisions past a short time-to-live. Alert on auth-dependency failure.</td><td>Test 4 shows the call refused during the outage with a fail-closed reason, and allowed again once auth recovers.</td></tr></tbody></table></div><div class="lane next"><div class="lh"><b>Next</b><span>High and Medium: a revoked credential keeps working briefly, and the rate limit is not enforced</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-04</strong><br><span class="badge high">High</span></td><td>Slow revocation. Check revocation synchronously on every tool call; push revocations rather than waiting for a cache to expire. Keep credential lifetimes short.</td><td>Test 3 shows 0 post-revoke successes and revoke latency at or below the agreed target.</td></tr><tr><td><strong>F-05</strong><br><span class="badge medium">Medium</span></td><td>Rate limit not enforced. Enforce a per-credential limit server-side, with a sliding window, and escalate to revocation when the limit is repeatedly hit.</td><td>Test 7 refuses every over-limit call.</td></tr></tbody></table></div><div class="lane later"><div class="lh"><b>Later</b><span>Low and Info: weaker audit trail and a missing reason code</span></div><table style="table-layout:fixed"><colgroup><col style="width:78px"><col style="width:52%"><col></colgroup><thead><tr><th>Item</th><th>What to change</th><th>Done when (re-test)</th></tr></thead><tbody><tr><td><strong>F-06</strong><br><span class="badge low">Low</span></td><td>Missing decision reasons. Return and log a machine-readable reason code on every allow and deny decision.</td><td>Test 8 reports every response carrying a reason.</td></tr><tr><td><strong>I-01</strong><br><span class="badge info">Info</span></td><td>Unlock denials carry no reason (Target A). Add a reason code to that response, to match the tool-call path.</td><td>Suggestion only: Section 5 states no pass condition for this note.</td></tr></tbody></table></div><p class="fn">Each &ldquo;done when&rdquo; condition is taken from the matching finding in Section 5, except I-01, where Section 5 gives a suggestion and no pass condition.</p></div>
+<h2 class="pb">6. Evidence ledger excerpt and hash-chain verification</h2>
 <p>Target A run, harness ledger, 83 entries, head <code>0c8758d54c9fb603257e73354f6e64188e89c5e1c29a4b996cd8fa9f032068f3</code>. Hashes are truncated to 12 hex digits. Full ledger in <code>&lt;profile-out&gt;/evidence-ledger.json</code>.</p>
-<table>
+<table class="led"><colgroup><col style="width:8%"><col style="width:19%"><col style="width:35%"><col style="width:19%"><col style="width:19%"></colgroup>
 <thead>
 <tr>
 <th>Entry</th>
@@ -457,7 +612,7 @@ h3 + ul { break-before: avoid; }
 </tr>
 </tbody></table>
 <p><strong>Verification (recomputed independently with <code>verifyEntries</code>):</strong></p>
-<table>
+<table class="led"><colgroup><col style="width:45%"><col style="width:10%"><col style="width:45%"></colgroup>
 <thead>
 <tr>
 <th>Ledger</th>
@@ -487,7 +642,7 @@ h3 + ul { break-before: avoid; }
 </tr>
 </tbody></table>
 <h2>7. OWASP Top 10 for LLM Applications (2025) mapping</h2>
-<table>
+<table class="avoid">
 <thead>
 <tr>
 <th>OWASP item</th>
